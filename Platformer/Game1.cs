@@ -40,7 +40,7 @@ namespace Platformer
                 Exit();
 
             // TODO: Add your update logic here
-
+            _character.Update(gameTime);
             base.Update(gameTime);
         }
 
