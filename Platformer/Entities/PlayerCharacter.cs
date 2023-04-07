@@ -8,10 +8,11 @@ using System.Threading.Tasks;
 using Platformer.AnimationUtil;
 using SharpDX.MediaFoundation;
 using Platformer.Input;
+using Platformer.Movement;
 
 namespace Platformer.Entities
 {
-    internal class PlayerCharacter
+    internal class PlayerCharacter: IMovable
     {
         //animation
         private Texture2D texture;
@@ -21,25 +22,30 @@ namespace Platformer.Entities
         private KeyboardDirectionTranslator keyboardDirectionTranslator;
 
         //movement
-      
-        private Vector2 currentDirection;
-        private Vector2 position;
-        private Vector2 baseSpeed;
-        private Vector2 currentSpeed;
+        public Vector2 CurrentDirection {get; set;}
+        public Vector2 Position { get; set; }
+        public Vector2 BaseSpeed { get; }
+        public float CurrentSpeedX { get; set; }
+        public float CurrentSpeedY { get; set; }
+
+        private IMovementBehaviour movementBehaviour;
      
         private float gravity;
         private float jumpImpulse;
+        private bool isGrounded;
         public PlayerCharacter(Texture2D texture)
         {
             this.texture = texture;
             this.animations = SpriteCutter.CreateAnimations(texture, new int[7] {11, 12, 1, 6, 1, 5, 7});
-            this.position = new Vector2(300,300);
-            this.currentDirection = new Vector2(0, 0);
-            this.baseSpeed = new Vector2(3, 0);
-            this.currentSpeed= new Vector2(0, 0);
+            this.Position = new Vector2(300,300);
+            this.CurrentDirection = new Vector2(0, 0);
+            this.BaseSpeed = new Vector2(3, 0);
+            this.CurrentSpeedX = 0f;
+            this.CurrentSpeedY = 0f;
             this.jumpImpulse = 10f;
             this.gravity = 1f;
             this.keyboardDirectionTranslator = new KeyboardDirectionTranslator();
+            this.movementBehaviour = new PlayerMovementBehaviour();
         }
 
         public void Update(GameTime gameTime)
@@ -49,23 +55,18 @@ namespace Platformer.Entities
         }
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, position, animations[1].CurrentFrame, Color.White);
+            spriteBatch.Draw(texture, Position, animations[1].CurrentFrame, Color.White);
         }
 
         public void Move()
         {
-            currentDirection = keyboardDirectionTranslator.TranslateInputToDirection();
-            currentSpeed.X = baseSpeed.X * currentDirection.X;
-            if (currentDirection.Y == -1) {
-                //jump
-                currentSpeed.Y -= jumpImpulse;
-            }
-            currentSpeed.Y += gravity;
-            position += currentSpeed;
-            if(position.Y > 300)
-            {
-                position.Y = 300;
-                currentSpeed.Y = 0;
+            CurrentDirection = keyboardDirectionTranslator.TranslateInputToDirection();
+            this.movementBehaviour.Move(this);
+            if(Position.Y > 300){
+                Position = new Vector2(Position.X,300);
+                PlayerMovementBehaviour m = (PlayerMovementBehaviour)this.movementBehaviour;
+                m.isGrounded = true;
+                CurrentSpeedY = 0f; 
             }
         }
         public void Animate(GameTime gameTime)
