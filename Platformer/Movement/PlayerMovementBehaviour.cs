@@ -9,30 +9,33 @@ namespace Platformer.Movement
 {
     internal class PlayerMovementBehaviour : IMovementBehaviour
     {
-        public bool isGrounded {get;set;} = false;
-        private bool hasDoubleJumped = false;
-        private bool isWallJumping = false;
+        public bool IsGrounded { get; set; } = false;
+        public bool HasDoubleJumped { get; set; } = false;
         private float gravity = 0.3f;
         private float jumpImpulse = -6.0f;
         public void Move(IMovable movable)
         {
+            if (IsGrounded)
+            {
+                HasDoubleJumped = false;
+            }
             movable.CurrentSpeedX = movable.BaseSpeed.X * movable.CurrentDirection.X;
             if (movable.CurrentDirection.Y == -1)
             {
-                if (isGrounded)
+                if (IsGrounded)
                 {
                     movable.CurrentSpeedY = jumpImpulse;
-                    isGrounded = false;
-                    hasDoubleJumped = false;
+                    IsGrounded = false;
                 }
-                else if(!hasDoubleJumped)
+                else if(!HasDoubleJumped)
                 {
                     movable.CurrentSpeedY = jumpImpulse;
-                    hasDoubleJumped = true;
+                    HasDoubleJumped = true;
                 }
             }
             movable.CurrentSpeedY += gravity;
             movable.Position += new Vector2(movable.CurrentSpeedX, movable.CurrentSpeedY);
+            //IsGrounded = false;
         }
     }
 }

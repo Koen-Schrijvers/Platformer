@@ -9,6 +9,8 @@ using Platformer.AnimationUtil;
 using SharpDX.MediaFoundation;
 using Platformer.Input;
 using Platformer.Movement;
+using System.Runtime.CompilerServices;
+using System.Diagnostics;
 
 namespace Platformer.Entities
 {
@@ -17,6 +19,10 @@ namespace Platformer.Entities
         //animation
         private Texture2D texture;
         private List<Animation> animations;
+        private int animationIndex;
+        private Vector2 scale;
+        private bool isFacingRight;
+        private SpriteEffects spriteEffect;
 
         //input
         private KeyboardDirectionTranslator keyboardDirectionTranslator;
@@ -30,9 +36,6 @@ namespace Platformer.Entities
 
         private IMovementBehaviour movementBehaviour;
      
-        private float gravity;
-        private float jumpImpulse;
-        private bool isGrounded;
         public PlayerCharacter(Texture2D texture)
         {
             this.texture = texture;
@@ -42,20 +45,32 @@ namespace Platformer.Entities
             this.BaseSpeed = new Vector2(3, 0);
             this.CurrentSpeedX = 0f;
             this.CurrentSpeedY = 0f;
-            this.jumpImpulse = 10f;
-            this.gravity = 1f;
             this.keyboardDirectionTranslator = new KeyboardDirectionTranslator();
             this.movementBehaviour = new PlayerMovementBehaviour();
+            this.scale = new Vector2(1,1);
+            this.isFacingRight = true;
         }
 
         public void Update(GameTime gameTime)
         {
             Move();
+            //Collision
+            SelectAnimation();
             Animate(gameTime);
         }
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, Position, animations[1].CurrentFrame, Color.White);
+            spriteBatch.Draw(
+                texture, 
+                Position, 
+                animations[animationIndex].CurrentFrame, 
+                Color.White,
+                0f,
+                Vector2.Zero, 
+                scale, 
+                spriteEffect,
+                0f
+            );
         }
 
         public void Move()
@@ -65,13 +80,58 @@ namespace Platformer.Entities
             if(Position.Y > 300){
                 Position = new Vector2(Position.X,300);
                 PlayerMovementBehaviour m = (PlayerMovementBehaviour)this.movementBehaviour;
-                m.isGrounded = true;
+                m.IsGrounded = true;
                 CurrentSpeedY = 0f; 
             }
         }
         public void Animate(GameTime gameTime)
         {
-            this.animations[1].Update(gameTime);
+            this.animations[this.animationIndex].Update(gameTime);
+        }
+        private void SelectAnimation()
+        {
+            PlayerMovementBehaviour m = (PlayerMovementBehaviour)this.movementBehaviour;
+            if(CurrentDirection.X != 0)
+            {
+                isFacingRight = CurrentDirection.X == 1;
+            }
+            if (m.IsGrounded)
+            {
+                if (CurrentSpeedX != 0f)
+                {
+                    animationIndex = 1;
+                }
+                else
+                {
+                    animationIndex = 0;
+                }
+            }
+            else
+            {
+                if (CurrentSpeedY <= 0f)
+                { 
+                    if (m.HasDoubleJumped)
+                    {
+                        animationIndex = 3;
+                    }
+                    else
+                    {
+                        animationIndex = 2;
+                    }
+                }
+                else
+                {
+                    animationIndex = 4;
+                }
+            }
+            if(!isFacingRight)
+            {
+                spriteEffect = SpriteEffects.FlipHorizontally;
+            }
+            else
+            {
+                spriteEffect = SpriteEffects.None;
+            }
         }
     }
 }
