@@ -21,7 +21,6 @@ namespace Platformer.Entities
         private List<Animation> animations;
         private int animationIndex;
         private Vector2 scale;
-        private bool isFacingRight;
         private SpriteEffects spriteEffect;
 
         //input
@@ -48,7 +47,6 @@ namespace Platformer.Entities
             this.keyboardDirectionTranslator = new KeyboardDirectionTranslator();
             this.movementBehaviour = new PlayerMovementBehaviour();
             this.scale = new Vector2(1,1);
-            this.isFacingRight = true;
         }
 
         public void Update(GameTime gameTime)
@@ -93,7 +91,14 @@ namespace Platformer.Entities
             PlayerMovementBehaviour m = (PlayerMovementBehaviour)this.movementBehaviour;
             if(CurrentDirection.X != 0)
             {
-                isFacingRight = CurrentDirection.X == 1;
+                if (CurrentDirection.X == -1)
+                {
+                    spriteEffect = SpriteEffects.FlipHorizontally;
+                }
+                else
+                {
+                    spriteEffect = SpriteEffects.None;
+                }
             }
             if (m.IsGrounded)
             {
@@ -123,14 +128,6 @@ namespace Platformer.Entities
                 {
                     animationIndex = 4;
                 }
-            }
-            if(!isFacingRight)
-            {
-                spriteEffect = SpriteEffects.FlipHorizontally;
-            }
-            else
-            {
-                spriteEffect = SpriteEffects.None;
             }
         }
     }
