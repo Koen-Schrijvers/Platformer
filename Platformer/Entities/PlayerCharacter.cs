@@ -51,7 +51,7 @@ namespace Platformer.Entities
 
         public void Update(GameTime gameTime)
         {
-            Move();
+            Move(gameTime);
             //Collision
             SelectAnimation();
             Animate(gameTime);
@@ -71,15 +71,27 @@ namespace Platformer.Entities
             );
         }
 
-        public void Move()
+        public void Move(GameTime gameTime)
         {
             CurrentDirection = keyboardDirectionTranslator.TranslateInputToDirection();
-            this.movementBehaviour.Move(this);
-            if(Position.Y > 300){
-                Position = new Vector2(Position.X,300);
-                PlayerMovementBehaviour m = (PlayerMovementBehaviour)this.movementBehaviour;
-                m.IsGrounded = true;
-                CurrentSpeedY = 0f; 
+            this.movementBehaviour.Move(this, gameTime);
+            PlayerMovementBehaviour m = (PlayerMovementBehaviour)this.movementBehaviour;
+            if (Position.X < 0)
+            {
+                Position = new Vector2(-1, Position.Y);
+                m.CurrentState = MovementState.WALL_HANGING_RIGHT;
+            }
+           
+            if (Position.X >= 700)
+            {
+                Position = new Vector2(701, Position.Y);
+                m.CurrentState = MovementState.WALL_HANGING_LEFT;
+            }
+            if (Position.Y > 300)
+            {
+                Position = new Vector2(Position.X, 300);
+                m.CurrentState = MovementState.GROUNDED;
+                CurrentSpeedY = 0f;
             }
         }
         public void Animate(GameTime gameTime)
@@ -89,18 +101,23 @@ namespace Platformer.Entities
         private void SelectAnimation()
         {
             PlayerMovementBehaviour m = (PlayerMovementBehaviour)this.movementBehaviour;
-            if(CurrentDirection.X != 0)
+            if(m.CurrentState == MovementState.WALL_HANGING_RIGHT)
             {
-                if (CurrentDirection.X == -1)
-                {
-                    spriteEffect = SpriteEffects.FlipHorizontally;
-                }
-                else
-                {
-                    spriteEffect = SpriteEffects.None;
-                }
+                spriteEffect = SpriteEffects.None;
             }
-            if (m.IsGrounded)
+            else if(m.CurrentState == MovementState.WALL_HANGING_LEFT) 
+            {
+                spriteEffect = SpriteEffects.FlipHorizontally;
+            }
+            else if (CurrentDirection.X == -1)
+            {
+                spriteEffect = SpriteEffects.FlipHorizontally;
+            }
+            else if (CurrentDirection.X == 1) 
+            {
+                spriteEffect = SpriteEffects.None;
+            }
+            if (m.CurrentState == MovementState.GROUNDED)
             {
                 if (CurrentSpeedX != 0f)
                 {
@@ -123,6 +140,10 @@ namespace Platformer.Entities
                     {
                         animationIndex = 2;
                     }
+                }
+                else if(m.CurrentState == MovementState.WALL_HANGING_RIGHT)
+                {
+                    animationIndex = 5;
                 }
                 else
                 {
