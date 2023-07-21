@@ -10,7 +10,9 @@ namespace Platformer
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private PlayerCharacter _character;
+        private Enemy mush; 
         private Texture2D frogTexture;
+        private Texture2D mushTexture;
 
         public Game1()
         {
@@ -24,12 +26,14 @@ namespace Platformer
             // TODO: Add your initialization logic here
             base.Initialize();
             _character = new PlayerCharacter(frogTexture);
+            mush= new Enemy(mushTexture);
         }
 
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             frogTexture = this.Content.Load<Texture2D>("Entities/player_characters/Frog");
+            mushTexture = this.Content.Load<Texture2D>("Entities/enemies/Mushroom");
 
             // TODO: use this.Content to load your game content here
         }
@@ -41,6 +45,7 @@ namespace Platformer
 
             // TODO: Add your update logic here
             _character.Update(gameTime);
+            mush.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -51,6 +56,7 @@ namespace Platformer
             // TODO: Add your drawing code here
             _spriteBatch.Begin();
             _character.Draw(_spriteBatch);
+            mush.Draw(_spriteBatch);
             _spriteBatch.End();
             base.Draw(gameTime);
         }

@@ -11,6 +11,7 @@ using Platformer.Input;
 using Platformer.Movement;
 using System.Runtime.CompilerServices;
 using System.Diagnostics;
+using Platformer.Movement.MovementBehaviours;
 
 namespace Platformer.Entities
 {
@@ -76,21 +77,10 @@ namespace Platformer.Entities
             CurrentDirection = keyboardDirectionTranslator.TranslateInputToDirection();
             this.movementBehaviour.Move(this, gameTime);
             PlayerMovementBehaviour m = (PlayerMovementBehaviour)this.movementBehaviour;
-            if (Position.X < 0)
-            {
-                Position = new Vector2(-1, Position.Y);
-                m.CurrentState = MovementState.WALL_HANGING_RIGHT;
-            }
-           
-            if (Position.X >= 700)
-            {
-                Position = new Vector2(701, Position.Y);
-                m.CurrentState = MovementState.WALL_HANGING_LEFT;
-            }
             if (Position.Y > 300)
             {
                 Position = new Vector2(Position.X, 300);
-                m.CurrentState = MovementState.GROUNDED;
+                m.IsGrounded= true;
                 CurrentSpeedY = 0f;
             }
         }
@@ -101,15 +91,7 @@ namespace Platformer.Entities
         private void SelectAnimation()
         {
             PlayerMovementBehaviour m = (PlayerMovementBehaviour)this.movementBehaviour;
-            if(m.CurrentState == MovementState.WALL_HANGING_RIGHT)
-            {
-                spriteEffect = SpriteEffects.None;
-            }
-            else if(m.CurrentState == MovementState.WALL_HANGING_LEFT) 
-            {
-                spriteEffect = SpriteEffects.FlipHorizontally;
-            }
-            else if (CurrentDirection.X == -1)
+            if (CurrentDirection.X == -1)
             {
                 spriteEffect = SpriteEffects.FlipHorizontally;
             }
@@ -117,7 +99,7 @@ namespace Platformer.Entities
             {
                 spriteEffect = SpriteEffects.None;
             }
-            if (m.CurrentState == MovementState.GROUNDED)
+            if (m.IsGrounded)
             {
                 if (CurrentSpeedX != 0f)
                 {
@@ -140,10 +122,6 @@ namespace Platformer.Entities
                     {
                         animationIndex = 2;
                     }
-                }
-                else if(m.CurrentState == MovementState.WALL_HANGING_RIGHT)
-                {
-                    animationIndex = 5;
                 }
                 else
                 {
