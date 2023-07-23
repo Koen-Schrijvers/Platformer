@@ -46,6 +46,10 @@ namespace Platformer
             // TODO: Add your update logic here
             _character.Update(gameTime);
             mush.Update(gameTime);
+            if (_character.Hitbox.Intersects(mush.Hitbox))
+            {
+                mush.CollisionEvent.Execute(_character);
+            }
             base.Update(gameTime);
         }
 

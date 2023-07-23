@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace Platformer.Entities
 {
-    internal class Enemy: IMovable, ICollider
+    internal class Enemy: IMovable, ICollidable
     {
         //animation
         private Texture2D texture;
@@ -32,7 +32,19 @@ namespace Platformer.Entities
         public float CurrentSpeedY { get; set; }
 
         // Collision
-        public Rectangle Hitbox { get; set; }
+        private FloatRectangle hitbox;
+        public FloatRectangle Hitbox {
+            get 
+            {
+                return new FloatRectangle(
+                   this.Position.X + this.hitbox.X,
+                   this.Position.Y + this.hitbox.Y,
+                   this.hitbox.Width,
+                   this.hitbox.Height
+                   );
+            } 
+        }
+        public CollisionTag tag { get; }
         public ICollisionEvent CollisionEvent { get; set; }
 
         // AI
@@ -43,13 +55,16 @@ namespace Platformer.Entities
             this.texture = texture;
             this.animations = SpriteCutter.CreateAnimations(texture, new int[3] { 14, 16, 5});
             this.Position = new Vector2(500, 300);
+            this.hitbox = new FloatRectangle(6, 12, 20, 20);
             this.CurrentDirection = new Vector2(1, 0);
-            this.BaseSpeed = new Vector2(2, 0);
+            this.BaseSpeed = new Vector2(1, 0);
+            this.CollisionEvent = new BasicEnemyCollisionEvent(this);
             this.CurrentSpeedX = 0f;
             this.CurrentSpeedY = 0f;
             this.movementBehaviour = new HorizontalSimpleMovementBehaviour();
             this.scale = new Vector2(1, 1);
             this.ai = new MushroomAi(this);
+            this.tag = CollisionTag.ENEMY;
         }
 
         public void Update(GameTime gameTime)
@@ -63,6 +78,7 @@ namespace Platformer.Entities
                     m.IsGrounded = true;
                     CurrentSpeedY = 0f;
             }
+            Animate(gameTime);
         }
         public void Draw(SpriteBatch spriteBatch)
         {
@@ -80,8 +96,31 @@ namespace Platformer.Entities
         }
         public void Animate(GameTime gameTime)
         {
+            SelectAnimation();
             this.animations[this.animationIndex].Update(gameTime);
         }
-        private void SelectAnimation(){}
+        private void SelectAnimation()
+        {
+            HorizontalSimpleMovementBehaviour m = (HorizontalSimpleMovementBehaviour)this.movementBehaviour;
+            if (CurrentDirection.X == 1)
+            {
+                spriteEffect = SpriteEffects.FlipHorizontally;
+            }
+            else if (CurrentDirection.X == -1)
+            {
+                spriteEffect = SpriteEffects.None;
+            }
+            if (m.IsGrounded)
+            {
+                if (CurrentSpeedX != 0f)
+                {
+                    animationIndex = 1;
+                }
+            }
+            else
+            {
+                animationIndex = 0;
+            }
+        }
     }
 }

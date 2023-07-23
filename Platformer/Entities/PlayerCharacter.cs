@@ -1,21 +1,16 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Platformer.AnimationUtil;
-using SharpDX.MediaFoundation;
 using Platformer.Input;
 using Platformer.Movement;
-using System.Runtime.CompilerServices;
-using System.Diagnostics;
 using Platformer.Movement.MovementBehaviours;
+using Platformer.Utilities;
+using Platformer.Utilities.CollisionEvents;
 
 namespace Platformer.Entities
 {
-    internal class PlayerCharacter: IMovable
+    internal class PlayerCharacter: IMovable, ICollidable
     {
         //animation
         private Texture2D texture;
@@ -35,7 +30,24 @@ namespace Platformer.Entities
         public float CurrentSpeedY { get; set; }
 
         private IMovementBehaviour movementBehaviour;
-     
+
+        //collision
+        private FloatRectangle hitbox;
+        public FloatRectangle Hitbox
+        {
+            get
+            {
+                return new FloatRectangle(
+                    this.Position.X + this.hitbox.X,
+                    this.Position.Y + this.hitbox.Y,
+                    this.hitbox.Width,
+                    this.hitbox.Height  
+                    );
+            }
+        }
+        public CollisionTag tag => throw new System.NotImplementedException();
+        public ICollisionEvent CollisionEvent { get; set; }
+
         public PlayerCharacter(Texture2D texture)
         {
             this.texture = texture;
@@ -43,6 +55,7 @@ namespace Platformer.Entities
             this.Position = new Vector2(300,300);
             this.CurrentDirection = new Vector2(0, 0);
             this.BaseSpeed = new Vector2(3, 0);
+            this.hitbox = new FloatRectangle(6, 6, 20, 26);
             this.CurrentSpeedX = 0f;
             this.CurrentSpeedY = 0f;
             this.keyboardDirectionTranslator = new KeyboardDirectionTranslator();
