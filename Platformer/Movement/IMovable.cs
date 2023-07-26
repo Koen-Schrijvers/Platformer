@@ -14,5 +14,6 @@ namespace Platformer.Movement
         public Vector2 CurrentDirection { get; set; }
         public float CurrentSpeedX { get; set; }
         public float CurrentSpeedY { get; set; }
+        public IMovementBehaviour MovementBehaviour { get; set; }
     }
 }

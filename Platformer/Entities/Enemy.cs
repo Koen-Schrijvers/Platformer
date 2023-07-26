@@ -30,6 +30,7 @@ namespace Platformer.Entities
         public Vector2 BaseSpeed { get; }
         public float CurrentSpeedX { get; set; }
         public float CurrentSpeedY { get; set; }
+        public IMovementBehaviour MovementBehaviour { get; set; }
 
         // Collision
         private FloatRectangle hitbox;
@@ -50,7 +51,16 @@ namespace Platformer.Entities
         // AI
         private IAi ai;
 
-        private IMovementBehaviour movementBehaviour;
+        // Combat 
+        private int health;
+        public int Health
+        {
+            get
+            {
+                return health;
+            }
+        }
+        public bool IsInvincible { get; }
         public Enemy(Texture2D texture) {
             this.texture = texture;
             this.animations = SpriteCutter.CreateAnimations(texture, new int[3] { 14, 16, 5});
@@ -61,7 +71,7 @@ namespace Platformer.Entities
             this.CollisionEvent = new BasicEnemyCollisionEvent(this);
             this.CurrentSpeedX = 0f;
             this.CurrentSpeedY = 0f;
-            this.movementBehaviour = new HorizontalSimpleMovementBehaviour();
+            this.MovementBehaviour = new HorizontalSimpleMovementBehaviour();
             this.scale = new Vector2(1, 1);
             this.ai = new MushroomAi(this);
             this.tag = CollisionTag.ENEMY;
@@ -70,8 +80,8 @@ namespace Platformer.Entities
         public void Update(GameTime gameTime)
         {
             ai.Act();
-            this.movementBehaviour.Move(this, gameTime);
-            HorizontalSimpleMovementBehaviour m = (HorizontalSimpleMovementBehaviour)this.movementBehaviour;
+            this.MovementBehaviour.Move(this, gameTime);
+            HorizontalSimpleMovementBehaviour m = (HorizontalSimpleMovementBehaviour)this.MovementBehaviour;
             if (Position.Y > 300)
             {
                     Position = new Vector2(Position.X, 300);
@@ -99,9 +109,16 @@ namespace Platformer.Entities
             SelectAnimation();
             this.animations[this.animationIndex].Update(gameTime);
         }
+        public void TakeDamage(int damage)
+        {
+            if (!IsInvincible)
+            {
+                health -= damage;
+            }
+        }
         private void SelectAnimation()
         {
-            HorizontalSimpleMovementBehaviour m = (HorizontalSimpleMovementBehaviour)this.movementBehaviour;
+            HorizontalSimpleMovementBehaviour m = (HorizontalSimpleMovementBehaviour)this.MovementBehaviour;
             if (CurrentDirection.X == 1)
             {
                 spriteEffect = SpriteEffects.FlipHorizontally;

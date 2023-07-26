@@ -20,7 +20,7 @@ namespace Platformer.Movement.MovementBehaviours
         public bool HasDoubleJumped { get; set; } = false;
         public bool IsWallHanging { get; set; } = false;
         private float gravity = 0.3f;
-        private float jumpImpulse = -6.0f;
+        private float jumpImpulse = -5.0f;
         private float aerialAccelerationX = 0.5f;
         private float wallJumpImpulse = 3.0f;
         private double wallHangToFallingTime = 0.3d;
