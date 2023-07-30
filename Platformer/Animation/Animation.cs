@@ -14,6 +14,12 @@ namespace Platformer.AnimationUtil
         private int currentFrameIndex;
         private double elapsedTime;
         public int Fps { get; set; }
+        public bool IsLastFrame { 
+            get
+            {
+                return currentFrameIndex == frames.Count - 1; 
+            }
+        }
         public Rectangle CurrentFrame { 
             get{
                 return frames[currentFrameIndex];
@@ -36,6 +42,11 @@ namespace Platformer.AnimationUtil
             {
                 currentFrameIndex = 0;
             }
+        }
+        public void ResetAnimation()
+        {
+            this.currentFrameIndex = 0;
+            this.elapsedTime = 0;
         }
     }
 }

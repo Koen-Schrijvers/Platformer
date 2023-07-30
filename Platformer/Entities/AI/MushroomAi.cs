@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Platformer.Entities.Enemies;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +10,8 @@ namespace Platformer.Entities.AI
 {
     internal class MushroomAi : IAi
     {
-        private Enemy vessel;
-        public MushroomAi(Enemy enemy) 
+        private BaseEnemy vessel;
+        public MushroomAi(BaseEnemy enemy) 
         { 
             this.vessel = enemy;
         }

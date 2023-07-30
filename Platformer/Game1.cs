@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Platformer.Entities;
+using Platformer.Entities.Enemies;
 
 namespace Platformer
 {
@@ -10,7 +11,7 @@ namespace Platformer
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private PlayerCharacter _character;
-        private Enemy mush; 
+        private Mushroom mush; 
         private Texture2D frogTexture;
         private Texture2D mushTexture;
 
@@ -26,7 +27,7 @@ namespace Platformer
             // TODO: Add your initialization logic here
             base.Initialize();
             _character = new PlayerCharacter(frogTexture);
-            mush= new Enemy(mushTexture);
+            mush= new Mushroom(mushTexture);
         }
 
         protected override void LoadContent()
