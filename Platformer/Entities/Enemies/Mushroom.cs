@@ -28,7 +28,7 @@ namespace Platformer.Entities.Enemies
             this.CurrentSpeedX = 0f;
             this.CurrentSpeedY = 0f;
             this.MovementBehaviour = new HorizontalSimpleMovementBehaviour();
-            this.Scale = new Vector2(1, 1);
+            this.Scale = new Vector2(1.1f, 1);
             this.ai = new MushroomAi(this);
             this.Tag = CollisionTag.ENEMY;
             this.animationHandler = new MushroomAnimationHandler();

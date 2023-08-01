@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Platformer.Movement
+namespace Platformer.Movement.MovementBehaviours
 {
     internal interface IMovementBehaviour
     {

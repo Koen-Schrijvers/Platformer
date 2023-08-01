@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace Platformer.Entities
 {
-    internal abstract class BaseCharacter: ICollidable, IAnimated, IMovable
+    internal abstract class BaseCharacter: ICollidable, IAnimated, IMovable, IGameObject
     {
         //animation
         protected IAnimationHandler animationHandler;
@@ -39,10 +39,10 @@ namespace Platformer.Entities
             get
             {
                 return new FloatRectangle(
-                    this.Position.X + this.hitbox.X,
-                    this.Position.Y + this.hitbox.Y,
-                    this.hitbox.Width,
-                    this.hitbox.Height
+                    this.Position.X + (this.hitbox.X * Scale.X),
+                    this.Position.Y + (this.hitbox.Y * Scale.Y),
+                    this.hitbox.Width * Scale.X,
+                    this.hitbox.Height * Scale.Y
                     );
             }
         }

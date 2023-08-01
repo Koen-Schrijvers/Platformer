@@ -16,9 +16,6 @@ namespace Platformer.Entities
 
         //input
         private KeyboardDirectionTranslator keyboardDirectionTranslator;
-        private bool inputIsDisabled;
-        private double inputDisabledTimeLimit;
-        private double inputDisabledTimeCount;
 
         //movement
         public bool HasDoubleJumped
@@ -51,21 +48,20 @@ namespace Platformer.Entities
 
         public PlayerCharacter(Texture2D texture)
         {
-            this.Texture = texture;
-            this.Animations = SpriteCutter.CreateAnimations(texture, new int[7] { 11, 12, 1, 6, 1, 5, 7 });
-            this.Position = new Vector2(300, 300);
-            this.CurrentDirection = new Vector2(0, 0);
-            this.BaseSpeed = new Vector2(3, 0);
-            this.hitbox = new FloatRectangle(6, 6, 20, 26);
-            this.CurrentSpeedX = 0f;
-            this.CurrentSpeedY = 0f;
-            this.keyboardDirectionTranslator = new KeyboardDirectionTranslator();
-            this.MovementBehaviour = new PlayerMovementBehaviour();
-            this.Scale = new Vector2(1, 1);
-            this.Health = 3;
-            this.inputDisabledTimeCount = 0;
-            this.animationHandler = new PlayerAnimationHandler();
-            this.Tag = CollisionTag.PLAYER;
+            Texture = texture;
+            Animations = SpriteCutter.CreateAnimations(texture, new int[7] { 11, 12, 1, 6, 1, 5, 7 });
+            Position = new Vector2(300, 300);
+            CurrentDirection = new Vector2(0, 0);
+            BaseSpeed = new Vector2(3, 0);
+            hitbox = new FloatRectangle(6, 6, 20, 26);
+            CurrentSpeedX = 0f;
+            CurrentSpeedY = 0f;
+            keyboardDirectionTranslator = new KeyboardDirectionTranslator();
+            MovementBehaviour = new PlayerMovementBehaviour();
+            Scale = new Vector2(1f, 1f);
+            Health = 3;
+            animationHandler = new PlayerAnimationHandler();
+            Tag = CollisionTag.PLAYER;
         }
 
         public override void Update(GameTime gameTime)
@@ -105,31 +101,20 @@ namespace Platformer.Entities
         }
         public void KnockBack(float speedX, float speedY)
         {
-            this.IsGrounded = false;
-            this.CurrentSpeedX = speedX;
-            this.CurrentSpeedY = speedY;
+            IsGrounded = false;
+            CurrentSpeedX = speedX;
+            CurrentSpeedY = speedY;
         }
         public void DisableInput(double duration)
         {
-            this.inputIsDisabled = true;
-            this.inputDisabledTimeLimit = duration;
+            keyboardDirectionTranslator.InputIsDisabled = true;
+            keyboardDirectionTranslator.InputDisabledTimeLimit = duration;
+            keyboardDirectionTranslator.InputDisabledTimeCount = 0;
         }
 
         private void ReadInput(GameTime gameTime)
         {
-            if (this.inputIsDisabled)
-            {
-                this.inputDisabledTimeCount += gameTime.ElapsedGameTime.TotalSeconds;
-                if (this.inputDisabledTimeCount >= this.inputDisabledTimeLimit)
-                {
-                    this.inputIsDisabled = false;
-                    this.inputDisabledTimeCount = 0;
-                    this.inputDisabledTimeLimit = 0;
-                }
-                this.CurrentDirection = new Vector2(0, 0);
-                return;
-            }
-            this.CurrentDirection = keyboardDirectionTranslator.TranslateInputToDirection();
+           CurrentDirection = keyboardDirectionTranslator.Translate(gameTime);
         }
     }
 }
