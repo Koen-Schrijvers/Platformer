@@ -98,6 +98,7 @@ namespace Platformer.Entities
             IsGrounded = false;
             CurrentSpeedX = speedX;
             CurrentSpeedY = speedY;
+            Position += new Vector2(CurrentSpeedX, CurrentSpeedY);
         }
         public void DisableInput(double duration)
         {

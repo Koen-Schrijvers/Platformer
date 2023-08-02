@@ -1,6 +1,7 @@
 ﻿using Platformer.Entities;
 using Platformer.Entities.Enemies;
 using System;
+using System.Diagnostics;
 
 namespace Platformer.Utilities.CollisionEvents
 {
@@ -16,6 +17,7 @@ namespace Platformer.Utilities.CollisionEvents
             float overlapX = CalculateOverlapX(other.Hitbox, subject.Hitbox);
             float overlapY = CalculateOverlapY(other.Hitbox, subject.Hitbox);
             PlayerCharacter p = other as PlayerCharacter;
+            if (p == null) return;
             if (Math.Abs(overlapX /= p.Hitbox.Width) >= Math.Abs(overlapY /= p.Hitbox.Height) && overlapY > 0)
             {
                 p.CurrentSpeedY = -4f;
@@ -29,11 +31,11 @@ namespace Platformer.Utilities.CollisionEvents
                 subject.CurrentDirection *= -1;
                 if (overlapX < 0)
                 {
-                    p.KnockBack(100f, -2f);
+                    p.KnockBack(5f, -2f);
                 }
                 else
                 {
-                    p.KnockBack(-100f, -2f);
+                    p.KnockBack(-5f, -2f);
                 }
             }
         }

@@ -30,12 +30,14 @@ namespace Platformer.Utilities.CollisionEvents
             if (otherHitbox.Left < thisHitbox.Left)
             {
                 overlapX = otherHitbox.Right - thisHitbox.Left;
+                if (overlapX < 0) return 0;
                 // +
                 // collision left side
             }
             else
             {
                 overlapX = otherHitbox.Left - thisHitbox.Right;
+                if (overlapX >0) return 0;
                 // -
                 // collision right side
             }
