@@ -9,6 +9,6 @@ namespace Platformer.Utilities.CollisionEvents
 {
     internal interface ICollisionEvent
     {
-        void Execute(ICollidable other);
+        void Execute(ICollidable other, ICollidable thisObject);
     }
 }

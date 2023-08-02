@@ -8,10 +8,11 @@ using Platformer.Movement.MovementBehaviours;
 using Platformer.Utilities;
 using Platformer.Utilities.CollisionEvents;
 using Platformer.AnimationUtil.Animation_handlers;
+using Platformer.Managers;
 
 namespace Platformer.Entities
 {
-    internal class PlayerCharacter : BaseCharacter
+    internal class PlayerCharacter : BaseCharacter, IGravity
     {
 
         //input
@@ -68,7 +69,7 @@ namespace Platformer.Entities
         {
             ReadInput(gameTime);
             Move(gameTime);
-            //Collision
+            CollisionManager.Instance().HandleCollisions(this);
             if (Health <=0)
             {
                 if (animationHandler.CurrentAnimation.IsLastFrame)
@@ -82,13 +83,6 @@ namespace Platformer.Entities
         protected override void Move(GameTime gameTime)
         {
             this.MovementBehaviour.Move(this, gameTime);
-            PlayerMovementBehaviour m = (PlayerMovementBehaviour)this.MovementBehaviour;
-            if (Position.Y > 300)
-            {
-                Position = new Vector2(Position.X, 300);
-                m.IsGrounded = true;
-                CurrentSpeedY = 0f;
-            }
         }
         public override void TakeDamage(int damage)
         {

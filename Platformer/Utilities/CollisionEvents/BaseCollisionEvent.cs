@@ -8,34 +8,36 @@ namespace Platformer.Utilities.CollisionEvents
 {
     internal abstract class BaseCollisionEvent: ICollisionEvent
     {
-        public abstract void Execute(ICollidable collidable);
-        protected float CalculateOverlapY(FloatRectangle otherHitbox, FloatRectangle subjectHitbox)
+        public abstract void Execute(ICollidable other, ICollidable thisObject);
+        protected float CalculateOverlapY(FloatRectangle otherHitbox, FloatRectangle thisHitbox)
         {
             float overlapY;
-            if (otherHitbox.Top < subjectHitbox.Top)
+            if (otherHitbox.Top < thisHitbox.Top)
             {
-                overlapY = otherHitbox.Bottom - subjectHitbox.Top;
+                overlapY = otherHitbox.Bottom - thisHitbox.Top;
                 // +
             }
             else
             {
-                overlapY = otherHitbox.Top - subjectHitbox.Bottom;
+                overlapY = otherHitbox.Top - thisHitbox.Bottom;
                 // -
             }
             return overlapY;
         }
-        protected float CalculateOverlapX(FloatRectangle otherHitbox, FloatRectangle subjectHitbox)
+        protected float CalculateOverlapX(FloatRectangle otherHitbox, FloatRectangle thisHitbox)
         {
             float overlapX;
-            if (otherHitbox.Left < subjectHitbox.Left)
+            if (otherHitbox.Left < thisHitbox.Left)
             {
-                overlapX = otherHitbox.Right - subjectHitbox.Left;
+                overlapX = otherHitbox.Right - thisHitbox.Left;
                 // +
+                // collision left side
             }
             else
             {
-                overlapX = otherHitbox.Left - subjectHitbox.Right;
+                overlapX = otherHitbox.Left - thisHitbox.Right;
                 // -
+                // collision right side
             }
             return overlapX;
         }

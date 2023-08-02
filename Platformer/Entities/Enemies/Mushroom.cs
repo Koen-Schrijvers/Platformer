@@ -11,11 +11,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
+using Platformer.Movement;
 
 namespace Platformer.Entities.Enemies
 {
-    internal class Mushroom: BaseEnemy
+    internal class Mushroom: BaseEnemy, IGravity
     {
+        public bool IsGrounded {
+            get 
+            {
+                HorizontalSimpleMovementBehaviour m = MovementBehaviour as HorizontalSimpleMovementBehaviour;
+                return m.IsGrounded;
+            }
+            set 
+            {
+                HorizontalSimpleMovementBehaviour m = MovementBehaviour as HorizontalSimpleMovementBehaviour;
+                m.IsGrounded = value;
+            } 
+        }
         public Mushroom(Texture2D texture) 
         {
             this.Texture = texture;
@@ -33,6 +46,7 @@ namespace Platformer.Entities.Enemies
             this.Tag = CollisionTag.ENEMY;
             this.animationHandler = new MushroomAnimationHandler();
         }
+
 
         public override void TakeDamage(int damage)
         {

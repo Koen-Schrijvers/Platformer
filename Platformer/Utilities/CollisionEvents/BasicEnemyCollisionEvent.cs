@@ -11,7 +11,7 @@ namespace Platformer.Utilities.CollisionEvents
         {
             this.subject = subject;
         }
-        public override void Execute(ICollidable other)
+        public override void Execute(ICollidable other, ICollidable thisObject)
         {
             float overlapX = CalculateOverlapX(other.Hitbox, subject.Hitbox);
             float overlapY = CalculateOverlapY(other.Hitbox, subject.Hitbox);
