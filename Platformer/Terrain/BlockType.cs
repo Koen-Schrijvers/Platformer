@@ -8,7 +8,7 @@ namespace Platformer.Terrain
 {
     internal enum BlockType
     {
-        SOLO,
+        SOLO = 1,
         UPPER_LEFT,
         UPPER_MIDDLE,
         UPPER_RIGHT,

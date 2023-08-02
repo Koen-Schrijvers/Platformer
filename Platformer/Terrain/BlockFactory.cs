@@ -1,6 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Platformer.Terrain.Blocks;
+using Platformer.Utilities.CollisionEvents;
+using SharpDX.Direct2D1.Effects;
+using SharpDX.Direct3D9;
 using SharpDX.Win32;
 using System;
 using System.Collections.Generic;
@@ -12,36 +15,79 @@ namespace Platformer.Terrain
 {
     internal class BlockFactory
     {
-        public static Block CreateBlock(BlockType type, Texture2D texture, int i, int j, Vector2 Position, int gridCellSize, Point drawOffset, Vector2 scale)
+        public static BasicBlock CreateBasicBlock(BlockType type,Texture2D texture, int i, int j, Point drawOffset, Vector2 scale)
         {
-            Block block;
+            Rectangle frame =  SelectFrame(type);
+            return new BasicBlock(
+                texture, 
+                frame, 
+                new Vector2 (
+                    j * frame.Width * scale.X + drawOffset.X, 
+                    i * frame.Width * scale.Y + drawOffset.Y
+                    ), 
+                scale,
+                new BlockMovementCollisionEvent()
+                );
+        }
+        public static Block createTrap()
+        {
+            return null;
+        }
+        private static Rectangle SelectFrame(BlockType type)
+        {
             Rectangle frame;
             switch (type)
             {
                 case BlockType.SOLO:
-                    frame = new Rectangle(128, 32, 32, 32);
+                    frame = new Rectangle(240, 48, 16, 16);
                     break;
                 case BlockType.UPPER_LEFT:
-                    frame = new Rectangle(160, 32, 32, 32);
+                    frame = new Rectangle(48, 16, 16, 16);
                     break;
                 case BlockType.UPPER_MIDDLE:
-                    frame = new Rectangle(192, 32, 32, 32);
+                    frame = new Rectangle(64, 16, 16, 16);
                     break;
                 case BlockType.UPPER_RIGHT:
-                    frame = new Rectangle(64, 32, 32, 32);
+                    frame = new Rectangle(80, 16, 16, 16);
                     break;
                 case BlockType.CENTER_LEFT:
-                    frame = new Rectangle(64, 64, 32, 32);
+                    frame = new Rectangle(48, 32, 16, 16);
                     break;
                 case BlockType.CENTER_MIDDLE:
-                    frame = new Rectangle(32, 96, 32, 32);
+                    frame = new Rectangle(64, 32, 16, 16);
+                    break;
+                case BlockType.CENTER_RIGHT:
+                    frame = new Rectangle(80, 32, 16, 16);
+                    break;
+                case BlockType.LOWER_LEFT:
+                    frame = new Rectangle(48, 96, 16, 16);
+                    break;
+                case BlockType.LOWER_MIDDLE:
+                    frame = new Rectangle(64, 96, 16, 16);
+                    break;
+                case BlockType.LOWER_RIGHT:
+                    frame = new Rectangle(80, 96, 16, 16);
+                    break;
+                case BlockType.LOWER_LEFT_GRASS:
+                    frame = new Rectangle(48, 48, 16, 16);
+                    break;
+                case BlockType.LOWER_RIGHT_GRASS:
+                    frame = new Rectangle(80, 48, 16, 16);
+                    break;
+                case BlockType.PLATFORM_LEFT:
+                    frame = new Rectangle(144, 48, 16, 16);
+                    break;
+                case BlockType.PLATFORM_RIGHT:
+                    frame = new Rectangle(208, 48, 16, 16);
+                    break;
+                case BlockType.PLATFORM_MIDDLE:
+                    frame = new Rectangle(160, 48, 16, 16);
                     break;
                 default:
-                    frame = new Rectangle(128, 32, 32, 32);
+                    frame = new Rectangle(240, 48, 16, 16);
                     break;
             }
-            block = new BasicBlock(texture, frame, new Vector2 (i * frame.Width + drawOffset.X, j * gridCellSize + drawOffset.Y), scale);
-            return block;
+            return frame;
         }
     }
 }
