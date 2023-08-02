@@ -15,11 +15,10 @@ namespace Platformer.Terrain
 {
     internal class BlockFactory
     {
-        public static BasicBlock CreateBasicBlock(BlockType type,Texture2D texture, int i, int j, Point drawOffset, Vector2 scale)
+        public static BasicBlock CreateBasicBlock(BlockType type, int i, int j, Point drawOffset, Vector2 scale)
         {
             Rectangle frame =  SelectFrame(type);
             return new BasicBlock(
-                texture, 
                 frame, 
                 new Vector2 (
                     j * frame.Width * scale.X + drawOffset.X, 

@@ -28,7 +28,7 @@ namespace Platformer.Managers
         private List<ICollidable> FindCollisions(ICollidable entity)
         {
             List<ICollidable> collisions = new List<ICollidable>();
-            CurrentLevel.Blocks.ForEach(b =>
+            CurrentLevel.Collidables.ForEach(b =>
             {
                 if (entity.Hitbox.Intersects(b.Hitbox)) collisions.Add(b);
             });
@@ -42,6 +42,7 @@ namespace Platformer.Managers
             {
                 x.CollisionEvent.Execute(entity,x);
             });
+            // zorg dat enemies enkel met terrain collide of geen collisions doen
         }
     }
 }

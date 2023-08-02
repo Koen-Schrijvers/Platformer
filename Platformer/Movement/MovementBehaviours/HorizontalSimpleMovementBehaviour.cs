@@ -14,7 +14,8 @@ namespace Platformer.Movement.MovementBehaviours
         public void Move(IMovable movable, GameTime gameTime)
         {
             movable.CurrentSpeedX = movable.BaseSpeed.X * movable.CurrentDirection.X;
-            movable.Position += new Vector2(movable.CurrentSpeedX, gravity);
+            movable.CurrentSpeedY += gravity;
+            movable.Position += new Vector2(movable.CurrentSpeedX, movable.CurrentSpeedY);
             IsGrounded = false;
         }
     }

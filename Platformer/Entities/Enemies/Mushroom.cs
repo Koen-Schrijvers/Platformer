@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Platformer.Movement;
+using Platformer.Managers;
 
 namespace Platformer.Entities.Enemies
 {
@@ -29,11 +30,11 @@ namespace Platformer.Entities.Enemies
                 m.IsGrounded = value;
             } 
         }
-        public Mushroom(Texture2D texture) 
+        public Mushroom(Vector2 spawn) 
         {
-            this.Texture = texture;
-            this.Animations = SpriteCutter.CreateAnimations(texture, new int[3] { 14, 16, 5 });
-            this.Position = new Vector2(500, 300);
+            this.Texture = ContentManager.Instance().MushroomTexture;
+            this.Animations = SpriteCutter.CreateAnimations(Texture, new int[3] { 14, 16, 5 });
+            this.Position = spawn;
             this.hitbox = new FloatRectangle(6, 12, 20, 20);
             this.CurrentDirection = new Vector2(1, 0);
             this.BaseSpeed = new Vector2(1, 0);
@@ -61,19 +62,13 @@ namespace Platformer.Entities.Enemies
         {
             ai.Act();
             Move(gameTime);
+            CollisionManager.Instance().HandleCollisions(this);
             Animate(gameTime);
         }
 
         protected override void Move(GameTime gameTime)
         {
             MovementBehaviour.Move(this, gameTime);
-            HorizontalSimpleMovementBehaviour m = (HorizontalSimpleMovementBehaviour)this.MovementBehaviour;
-            if (Position.Y > 300)
-            {
-                Position = new Vector2(Position.X, 300);
-                m.IsGrounded = true;
-                CurrentSpeedY = 0f;
-            }
         }
     }
 }

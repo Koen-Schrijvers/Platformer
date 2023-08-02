@@ -47,11 +47,11 @@ namespace Platformer.Entities
         }
 
 
-        public PlayerCharacter(Texture2D texture)
+        public PlayerCharacter(Vector2 spawn)
         {
-            Texture = texture;
-            Animations = SpriteCutter.CreateAnimations(texture, new int[7] { 11, 12, 1, 6, 1, 5, 7 });
-            Position = new Vector2(300, 300);
+            Texture = ContentManager.Instance().FrogTexture;
+            Animations = SpriteCutter.CreateAnimations(Texture, new int[7] { 11, 12, 1, 6, 1, 5, 7 });
+            Position = spawn;
             CurrentDirection = new Vector2(0, 0);
             BaseSpeed = new Vector2(3, 0);
             hitbox = new FloatRectangle(6, 6, 20, 26);

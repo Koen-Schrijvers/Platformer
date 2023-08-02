@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Platformer.Managers;
 using Platformer.Utilities;
 using Platformer.Utilities.CollisionEvents;
 using System;
@@ -12,9 +13,9 @@ namespace Platformer.Terrain.Blocks
 {
     internal class BasicBlock: Block
     {
-        public BasicBlock(Texture2D texture, Rectangle frame, Vector2 position, Vector2 scale, ICollisionEvent collisionEvent)
+        public BasicBlock(Rectangle frame, Vector2 position, Vector2 scale, ICollisionEvent collisionEvent)
         {
-            Texture = texture;
+            Texture = ContentManager.Instance().TerrainTexture;
             textureFrame = frame;
             Position = position;
             Scale = scale;

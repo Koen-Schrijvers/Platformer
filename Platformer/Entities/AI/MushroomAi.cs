@@ -17,7 +17,7 @@ namespace Platformer.Entities.AI
         }
         public void Act()
         {
-            if(vessel.Position.X>700 || vessel.Position.X < 0)
+            if(vessel.Position.X>400 || vessel.Position.X <350)
             {
                 vessel.CurrentDirection *= new Vector2(-1, 1);
             }

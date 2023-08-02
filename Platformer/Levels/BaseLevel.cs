@@ -16,29 +16,32 @@ namespace Platformer.Levels
 {
     internal class BaseLevel
     {
-        protected Dictionary<string, Texture2D> enemyTextures;
-        protected Texture2D terrainTexture;
-        protected Texture2D playerCharacterTexture;
-        protected Vector2 playerSpawn;
         public PlayerCharacter player;
         public int[,] GameBoard { get; set; }
         public List<Block> Blocks { get; set; }
         public List<FillerBlock> FillerBlocks { get; set; }
         public Point DrawOffset { get; set; }
         public List<BaseEnemy> Enemies { get; set; }
+        public List<ICollidable> Collidables { get; set; }
 
-        public BaseLevel(Texture2D texture)
+        public BaseLevel()
         {
-            terrainTexture = texture;
+            Blocks = new List<Block>();
+            Enemies = new List<BaseEnemy>();
+            Enemies.Add(new Mushroom(new Vector2(400,300)));
+            player = new PlayerCharacter(new Vector2(300,300));
             DrawOffset = new Point(300, 300);
             GameBoard = new int[,] {
-                { 1,0,0,0,0,0,0,0,0,0,0,0,1 },
-                { 1,0,0,0,0,0,0,0,0,0,0,0,1 },
-                { 1,0,0,0,0,0,0,0,0,0,0,0,1 },
-                { 1,1,1,1,1,1,1,1,1,1,1,1,1 } 
+                { 4,0,0,0,0,0,0,0,0,0,0,0,2 },
+                { 7,0,0,0,0,0,0,0,0,0,0,0,5 },
+                { 7,0,0,0,0,0,0,0,0,0,0,0,5 },
+                { 12,3,3,3,3,3,3,3,3,3,3,3,9 } 
             };
             CollisionManager.Instance().CurrentLevel = this;
             Initialize();
+            Collidables = new List<ICollidable>();
+            Collidables.AddRange(Blocks);
+            Collidables.AddRange(Enemies);
         }
         public void Update(GameTime gameTime)
         {
@@ -61,7 +64,7 @@ namespace Platformer.Levels
                 {
                     if (GameBoard[i, j] != 0)
                     {
-                        Blocks.Add(BlockFactory.CreateBasicBlock((BlockType)GameBoard[i, j], terrainTexture ,i, j, DrawOffset, new Vector2(1,1)));
+                        Blocks.Add(BlockFactory.CreateBasicBlock((BlockType)GameBoard[i, j],i, j, DrawOffset, new Vector2(1,1)));
                     }
                 }
             }
