@@ -77,7 +77,7 @@ namespace Platformer.AnimationUtil.Animation_handlers
 
         public void Draw(SpriteBatch spriteBatch, IAnimated animated, Vector2 position)
         {
-            if (canDraw)
+            if (canDraw && CurrentAnimation != null)
             {
                 spriteBatch.Draw(
                     animated.Texture,

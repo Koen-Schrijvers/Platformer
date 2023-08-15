@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Platformer.Entities;
 using Platformer.Entities.Enemies;
 using Platformer.Managers;
+using Platformer.Screens;
 using Platformer.Terrain;
 using Platformer.Terrain.Blocks;
 using Platformer.Utilities;
@@ -14,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace Platformer.Levels
 {
-    internal class BaseLevel
+    internal class BaseLevel: IScreen
     {
         public PlayerCharacter player;
         public int[,] GameBoard { get; set; }
