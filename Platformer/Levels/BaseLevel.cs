@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using Platformer.Entities;
 using Platformer.Entities.Enemies;
 using Platformer.Managers;
@@ -48,6 +49,7 @@ namespace Platformer.Levels
         {
             player.Update(gameTime);
             Enemies.ForEach(x => x.Update(gameTime));
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape)) GameManager.Instance().ChangeScreen(new StartScreen());
         }
         public void Draw(SpriteBatch spriteBatch)
         {

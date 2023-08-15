@@ -38,7 +38,7 @@ namespace Platformer.Screens
             menu = new Menu(new Dictionary<string, Action>() {
                 { "play", ()=>{ GameManager.Instance().ChangeScreen(new BaseLevel()); } },
                 { "levels", null },
-                { "quit", null },
+                { "quit", ()=>{ GameManager.Instance().QuitGame(); } },
             }, new Rectangle((Game1.ScreenWidth - menuWidth)/2, (Game1.ScreenHeight - menuHeight)/2 + 50, menuWidth, menuHeight), Managers.ContentManager.Instance().ButtonTexture, 10);
             titleSpeed = new Vector2(0.4f,0.4f); 
         }
