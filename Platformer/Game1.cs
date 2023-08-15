@@ -22,12 +22,9 @@ namespace Platformer
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-        private BaseLevel baseLevel;
         public static int ScreenWidth = 1000;
         public static int ScreenHeight = 500;
 
-        //TEST
-        private StartScreen menu;
 
         public Game1()
         {
@@ -43,8 +40,6 @@ namespace Platformer
         {
             // TODO: Add your initialization logic here
             base.Initialize();
-            //baseLevel = new BaseLevel();
-            //menu = new StartScreen();
             GameManager.Instance().Initialize(this);
         }
 
@@ -57,7 +52,6 @@ namespace Platformer
         protected override void Update(GameTime gameTime)
         {
             // TODO: Add your update logic here
-            //baseLevel.Update(gameTime);
             GameManager.Instance().Update(gameTime);
             base.Update(gameTime);
         }
@@ -68,7 +62,6 @@ namespace Platformer
 
             // TODO: Add your drawing code here
             _spriteBatch.Begin();
-            //baseLevel.Draw(_spriteBatch);
             GameManager.Instance().Draw(_spriteBatch);
             _spriteBatch.End();
             base.Draw(gameTime);
