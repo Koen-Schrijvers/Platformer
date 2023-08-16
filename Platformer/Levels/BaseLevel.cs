@@ -7,6 +7,7 @@ using Platformer.Managers;
 using Platformer.Screens;
 using Platformer.Terrain;
 using Platformer.Terrain.Blocks;
+using Platformer.UI;
 using Platformer.Utilities;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,8 @@ namespace Platformer.Levels
 {
     internal class BaseLevel: IScreen
     {
+        private Texture2D backgroundTexture;
+        private HUD hud;
         public PlayerCharacter player;
         public int[,] GameBoard { get; set; }
         public List<Block> Blocks { get; set; }
@@ -30,33 +33,58 @@ namespace Platformer.Levels
         {
             Blocks = new List<Block>();
             Enemies = new List<BaseEnemy>();
-            Enemies.Add(new Mushroom(new Vector2(400,300)));
+            Enemies.Add(new Mushroom(new Vector2(450,300), 410, 522)); // 522
             player = new PlayerCharacter(new Vector2(300,300));
-            DrawOffset = new Point(300, 300);
             GameBoard = new int[,] {
-                { 4,0,0,0,0,0,0,0,0,0,0,0,2 },
-                { 7,0,0,0,0,0,0,0,0,0,0,0,5 },
-                { 7,0,0,0,0,0,0,0,0,0,0,0,5 },
-                { 12,3,3,3,3,3,3,3,3,3,3,3,9 } 
+                { 4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+                { 7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+                { 7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0 },
+                { 7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+                { 7,0,0,0,0,0,0,0,16,18,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+                { 7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,16,17,18,0,0,0,0,0,0,0 },
+                { 7,0,0,0,0,0,0,0,0,0,0,19,19,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+                { 7,0,0,0,1,0,0,0,0,0,0,16,17,17,17,18,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+                { 7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,16,17,17,17,17,17,17,18,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+                { 7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,3,3,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+                { 7,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,5,6,6,7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+                { 7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,6,6,7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,16,18,0,0,0,0,0,0,0,0,0 },
+                { 7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,6,6,7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+                { 7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,6,6,7,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19 },
+                {12,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,9,6,6,12,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3 }
             };
+            DrawOffset = new Point(
+                0,
+                Game1.ScreenHeight - GameBoard.GetLength(0)*16
+                );
             CollisionManager.Instance().CurrentLevel = this;
             Initialize();
             Collidables = new List<ICollidable>();
             Collidables.AddRange(Blocks);
             Collidables.AddRange(Enemies);
+            backgroundTexture = ContentManager.Instance().LevelBackgroundTexture;
+            hud = new HUD(player);
         }
         public void Update(GameTime gameTime)
         {
             player.Update(gameTime);
-            Enemies.ForEach(x => x.Update(gameTime));
+            if(player.IsDead) GameManager.Instance().ChangeScreen(new StartScreen());
+            for (int i = 0; i < Enemies.Count; i ++)
+            {
+                Enemies[i].Update(gameTime);
+                if (Enemies[i].IsDead) {
+                    Collidables.Remove(Enemies[i]);
+                    Enemies.RemoveAt(i);
+                };
+            }
             if (Keyboard.GetState().IsKeyDown(Keys.Escape)) GameManager.Instance().ChangeScreen(new StartScreen());
         }
         public void Draw(SpriteBatch spriteBatch)
         {
+            spriteBatch.Draw(backgroundTexture, new Rectangle(0, 0, Game1.ScreenWidth, Game1.ScreenHeight), Color.White);
             Blocks.ForEach(x => x.Draw(spriteBatch));
             Enemies.ForEach(x => x.Draw(spriteBatch));
             player.Draw(spriteBatch);
-
+            hud.Draw(spriteBatch);
         }
         private void Initialize()
         {
@@ -71,10 +99,6 @@ namespace Platformer.Levels
                     }
                 }
             }
-        }
-        public void ResetLevel()
-        {
-
         }
     }
 }

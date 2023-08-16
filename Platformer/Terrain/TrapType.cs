@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Platformer.UI.Components.MenuActions
+namespace Platformer.Terrain
 {
-    internal interface IMenuAction
+    internal enum TrapType
     {
-        public void Execute();
+        SPIKE_TRAP
     }
 }

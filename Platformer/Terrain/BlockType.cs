@@ -26,6 +26,6 @@ namespace Platformer.Terrain
         PLATFORM_LEFT,
         PLATFORM_MIDDLE,
         PLATFORM_RIGHT,
-        SPIKE_TRAP,
+        TRAP_SPIKE
     }
 }

@@ -13,13 +13,13 @@ namespace Platformer.Terrain.Blocks
 {
     internal class BasicBlock: Block
     {
-        public BasicBlock(Rectangle frame, Vector2 position, Vector2 scale, ICollisionEvent collisionEvent)
+        public BasicBlock(Rectangle frame, Vector2 position, Vector2 scale)
         {
             Texture = ContentManager.Instance().TerrainTexture;
             textureFrame = frame;
             Position = position;
             Scale = scale;
-            CollisionEvent = collisionEvent;
+            CollisionEvent = new BlockMovementCollisionEvent();
             Hitbox = new FloatRectangle(
                     position.X,
                     position.Y,

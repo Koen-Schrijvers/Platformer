@@ -30,22 +30,23 @@ namespace Platformer.Entities.Enemies
                 m.IsGrounded = value;
             } 
         }
-        public Mushroom(Vector2 spawn) 
+        public Mushroom(Vector2 spawn, int limitLeft, int limitRight) 
         {
             this.Texture = ContentManager.Instance().MushroomTexture;
             this.Animations = SpriteCutter.CreateAnimations(Texture, new int[3] { 14, 16, 5 });
             this.Position = spawn;
             this.hitbox = new FloatRectangle(6, 12, 20, 20);
             this.CurrentDirection = new Vector2(1, 0);
-            this.BaseSpeed = new Vector2(1, 0);
+            this.BaseSpeed = new Vector2(0.75f, 0);
             this.CollisionEvent = new BasicEnemyCollisionEvent(this);
             this.CurrentSpeedX = 0f;
             this.CurrentSpeedY = 0f;
             this.MovementBehaviour = new HorizontalSimpleMovementBehaviour();
             this.Scale = new Vector2(1.1f, 1);
-            this.ai = new MushroomAi(this);
+            this.ai = new MushroomAi(this, limitLeft, limitRight);
             this.Tag = CollisionTag.ENEMY;
             this.animationHandler = new MushroomAnimationHandler();
+            this.Health = 1;
         }
 
 
@@ -63,6 +64,13 @@ namespace Platformer.Entities.Enemies
             ai.Act();
             Move(gameTime);
             CollisionManager.Instance().HandleCollisions(this);
+            if (Health <= 0)
+            {
+                if (animationHandler.CurrentAnimation.IsLastFrame)
+                {
+                    IsDead = true;
+                }
+            }
             Animate(gameTime);
         }
 

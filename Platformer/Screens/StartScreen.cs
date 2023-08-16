@@ -4,7 +4,6 @@ using Platformer.AnimationUtil;
 using Platformer.Levels;
 using Platformer.Managers;
 using Platformer.UI;
-using Platformer.UI.Components.MenuActions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -40,7 +39,7 @@ namespace Platformer.Screens
                 { "levels", null },
                 { "quit", ()=>{ GameManager.Instance().QuitGame(); } },
             }, new Rectangle((Game1.ScreenWidth - menuWidth)/2, (Game1.ScreenHeight - menuHeight)/2 + 50, menuWidth, menuHeight), Managers.ContentManager.Instance().ButtonTexture, 10);
-            titleSpeed = new Vector2(0.4f,0.4f); 
+            titleSpeed = new Vector2(0f,0.4f); 
         }
         public void Update(GameTime gameTime)
         {
@@ -56,10 +55,6 @@ namespace Platformer.Screens
         }
         private void MoveTitle()
         {
-            if (titlePosition.X < 250 || titlePosition.X>400)
-            {
-                titleSpeed.X *= -1;
-            }
             if (titlePosition.Y < 70 || titlePosition.Y > 110)
             {
                 titleSpeed.Y *= -1;

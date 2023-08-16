@@ -2,8 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Platformer.Managers;
-using Platformer.UI.Components;
-using Platformer.UI.Components.MenuActions;
+using Platformer.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;

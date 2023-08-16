@@ -22,10 +22,6 @@ namespace Platformer.Movement.MovementBehaviours
         private float gravity = 0.3f;
         private float jumpImpulse = -5.0f;
         private float aerialAccelerationX = 0.5f;
-        private float wallJumpImpulse = 3.0f;
-        private double wallHangToFallingTime = 0.3d;
-        private double wallHangToFallingCurrentTime = 0d;
-        public MovementState CurrentState { get; set; } = MovementState.AIRBORNE;
         public void Move(IMovable movable, GameTime gameTime)
         {
             // setState

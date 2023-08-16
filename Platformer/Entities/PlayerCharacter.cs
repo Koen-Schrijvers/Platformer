@@ -62,6 +62,7 @@ namespace Platformer.Entities
             Scale = new Vector2(1f, 1f);
             Health = 3;
             animationHandler = new PlayerAnimationHandler();
+            IsDead= false;
             Tag = CollisionTag.PLAYER;
         }
 
@@ -83,6 +84,17 @@ namespace Platformer.Entities
         protected override void Move(GameTime gameTime)
         {
             this.MovementBehaviour.Move(this, gameTime);
+            if (Position.Y > Game1.ScreenHeight*2) IsDead = true; 
+            if (Position.X < -hitbox.Left)
+            {
+                Position = new Vector2(-hitbox.Left,Position.Y);
+                CurrentSpeedX= 0f;
+            }
+            else if(Position.X > Game1.ScreenWidth - hitbox.Right)
+            {
+                Position = new Vector2(Game1.ScreenWidth - hitbox.Right, Position.Y);
+                CurrentSpeedX = 0f;
+            }
         }
         public override void TakeDamage(int damage)
         {

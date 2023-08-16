@@ -11,8 +11,6 @@ using Platformer.Screens;
 using Platformer.Terrain;
 using Platformer.Terrain.Blocks;
 using Platformer.UI;
-using Platformer.UI.Components;
-using Platformer.UI.Components.MenuActions;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
@@ -22,8 +20,8 @@ namespace Platformer
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-        public static int ScreenWidth = 1000;
-        public static int ScreenHeight = 500;
+        public static int ScreenWidth = 800;
+        public static int ScreenHeight = 512;
 
 
         public Game1()

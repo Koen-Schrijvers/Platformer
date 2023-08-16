@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Platformer.AnimationUtil;
 using Platformer.Managers;
-using Platformer.UI.Components.MenuActions;
+using Platformer.UI;
 using Platformer.Utilities;
 using System;
 using System.Collections.Generic;
@@ -11,14 +11,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Platformer.UI.Components
+namespace Platformer.UI
 {
     internal class MenuOption
     {
         private string text;
         private SpriteFont font;
         private Vector2 textPosition;
-        public Texture2D ButtonTexture {get; private set;}
+        public Texture2D ButtonTexture { get; private set; }
         public Rectangle DestinationRectangle { get; private set; }
         public Action MenuAction { get; private set; }
         public MenuOption(Texture2D texture, Action action, Rectangle destinationRect, string text)
@@ -35,8 +35,8 @@ namespace Platformer.UI.Components
         }
         public void Draw(SpriteBatch spriteBatch, bool isSelected)
         {
-            Color color = isSelected? Color.White : Color.Gray;
-            if(ButtonTexture !=null) spriteBatch.Draw(ButtonTexture, DestinationRectangle ,null, color);
+            Color color = isSelected ? Color.White : Color.Gray;
+            if (ButtonTexture != null) spriteBatch.Draw(ButtonTexture, DestinationRectangle, null, color);
             spriteBatch.DrawString(font, text, textPosition, Color.Black);
         }
         public void Execute()
