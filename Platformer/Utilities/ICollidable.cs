@@ -10,7 +10,6 @@ namespace Platformer.Utilities
 {
     internal interface ICollidable
     {
-        CollisionTag Tag { get; }
         FloatRectangle Hitbox { get; }
         ICollisionEvent CollisionEvent { get; set; }
     }

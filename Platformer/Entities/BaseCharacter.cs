@@ -46,12 +46,10 @@ namespace Platformer.Entities
                     );
             }
         }
-        public CollisionTag Tag { get; protected set; }
         public ICollisionEvent CollisionEvent { get; set; }
 
         //combat
         public int Health { get; protected set; }
-        public bool IsInvincible { get; protected set; }
         public bool IsDead { get; protected set; }
 
         public abstract void Update(GameTime gameTime);

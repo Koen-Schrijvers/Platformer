@@ -59,6 +59,7 @@ namespace Platformer.Movement.MovementBehaviours
                 }
             }
             movable.CurrentSpeedY += gravity;
+            if (movable.CurrentSpeedY >= 5) movable.CurrentSpeedY = 5;
 
             // change Position
             movable.Position += new Vector2(movable.CurrentSpeedX, movable.CurrentSpeedY);

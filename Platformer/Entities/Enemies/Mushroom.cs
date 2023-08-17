@@ -44,7 +44,6 @@ namespace Platformer.Entities.Enemies
             this.MovementBehaviour = new HorizontalSimpleMovementBehaviour();
             this.Scale = new Vector2(1.1f, 1);
             this.ai = new MushroomAi(this, limitLeft, limitRight);
-            this.Tag = CollisionTag.ENEMY;
             this.animationHandler = new MushroomAnimationHandler();
             this.Health = 1;
         }
@@ -52,10 +51,7 @@ namespace Platformer.Entities.Enemies
 
         public override void TakeDamage(int damage)
         {
-            if (!IsInvincible)
-            {
-                Health -= damage;
-            }
+            Health -= damage;
             animationHandler.PlayFullAnimation(Animations[2]);
         }
 
@@ -64,6 +60,16 @@ namespace Platformer.Entities.Enemies
             ai.Act();
             Move(gameTime);
             CollisionManager.Instance().HandleCollisions(this);
+            CheckHealth();
+            Animate(gameTime);
+        }
+
+        protected override void Move(GameTime gameTime)
+        {
+            MovementBehaviour.Move(this, gameTime);
+        }
+        private void CheckHealth()
+        {
             if (Health <= 0)
             {
                 if (animationHandler.CurrentAnimation.IsLastFrame)
@@ -71,12 +77,6 @@ namespace Platformer.Entities.Enemies
                     IsDead = true;
                 }
             }
-            Animate(gameTime);
-        }
-
-        protected override void Move(GameTime gameTime)
-        {
-            MovementBehaviour.Move(this, gameTime);
         }
     }
 }

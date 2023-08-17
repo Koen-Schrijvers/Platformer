@@ -7,6 +7,7 @@ using Platformer.Managers;
 using Platformer.Screens;
 using Platformer.Terrain;
 using Platformer.Terrain.Blocks;
+using Platformer.Terrain.Pickups;
 using Platformer.UI;
 using Platformer.Utilities;
 using System;
@@ -24,17 +25,21 @@ namespace Platformer.Levels
         public PlayerCharacter player;
         public int[,] GameBoard { get; set; }
         public List<Block> Blocks { get; set; }
-        public List<FillerBlock> FillerBlocks { get; set; }
         public Point DrawOffset { get; set; }
         public List<BaseEnemy> Enemies { get; set; }
+        public List<BasePickup> Pickups { get; set; }
         public List<ICollidable> Collidables { get; set; }
 
         public BaseLevel()
         {
             Blocks = new List<Block>();
-            Enemies = new List<BaseEnemy>();
-            Enemies.Add(new Mushroom(new Vector2(450,300), 410, 522)); // 522
+            Enemies = new List<BaseEnemy>
+            {
+                new Mushroom(new Vector2(450, 300), 410, 522)
+            };
             player = new PlayerCharacter(new Vector2(300,300));
+            Pickups= new List<BasePickup>();
+            Pickups.Add(new Heart(new Vector2(128,408), new Vector2(1f, 1f)));
             GameBoard = new int[,] {
                 { 4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
                 { 7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
@@ -57,10 +62,11 @@ namespace Platformer.Levels
                 Game1.ScreenHeight - GameBoard.GetLength(0)*16
                 );
             CollisionManager.Instance().CurrentLevel = this;
-            Initialize();
+            InitializeBlocks();
             Collidables = new List<ICollidable>();
             Collidables.AddRange(Blocks);
             Collidables.AddRange(Enemies);
+            Collidables.AddRange(Pickups);
             backgroundTexture = ContentManager.Instance().LevelBackgroundTexture;
             hud = new HUD(player);
         }
@@ -76,6 +82,15 @@ namespace Platformer.Levels
                     Enemies.RemoveAt(i);
                 };
             }
+            for (int i = 0; i < Pickups.Count; i++)
+            {
+                Pickups[i].Update(gameTime);
+                if (Pickups[i].IsTaken)
+                {
+                    Collidables.Remove(Pickups[i]);
+                    Pickups.RemoveAt(i);
+                };
+            }
             if (Keyboard.GetState().IsKeyDown(Keys.Escape)) GameManager.Instance().ChangeScreen(new StartScreen());
         }
         public void Draw(SpriteBatch spriteBatch)
@@ -83,10 +98,11 @@ namespace Platformer.Levels
             spriteBatch.Draw(backgroundTexture, new Rectangle(0, 0, Game1.ScreenWidth, Game1.ScreenHeight), Color.White);
             Blocks.ForEach(x => x.Draw(spriteBatch));
             Enemies.ForEach(x => x.Draw(spriteBatch));
+            Pickups.ForEach(x => x.Draw(spriteBatch));
             player.Draw(spriteBatch);
             hud.Draw(spriteBatch);
         }
-        private void Initialize()
+        private void InitializeBlocks()
         {
             Blocks = new List<Block>();
             for (int i = 0; i < GameBoard.GetLength(0); i++)

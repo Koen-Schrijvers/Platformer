@@ -80,6 +80,18 @@
 /processorParam:TextureFormat=Color
 /build:Fonts/Title.png
 
+#begin Terrain/Heart_spritesheet.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Terrain/Heart_spritesheet.png
+
 #begin Terrain/spikes.png
 /importer:TextureImporter
 /processor:TextureProcessor

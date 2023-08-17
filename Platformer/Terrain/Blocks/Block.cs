@@ -13,7 +13,6 @@ namespace Platformer.Terrain.Blocks
 {
     internal abstract class Block: IGameObject, ICollidable
     {
-        public CollisionTag Tag { get; protected set; }
         public FloatRectangle Hitbox { get; protected set; }
         public ICollisionEvent CollisionEvent { get; set; }
         public Texture2D Texture { get; protected set; }

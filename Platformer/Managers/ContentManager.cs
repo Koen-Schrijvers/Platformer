@@ -17,6 +17,7 @@ namespace Platformer.Managers
         public Texture2D TitleScreenBackgroundTexture { get; set; }
         public Texture2D Title { get; set; }
         public Texture2D HeartTexture { get; set; }
+        public Texture2D HeartSpritesheetTexture { get; set; }
         public SpriteFont ButtonFont { get; set; }
         public Texture2D SpikeTexture { get; set; }
         private static ContentManager instance;
@@ -35,6 +36,7 @@ namespace Platformer.Managers
             HeartTexture = game.Content.Load<Texture2D>("UI/Heart");
             LevelBackgroundTexture = game.Content.Load<Texture2D>("Backgrounds/Level_background");
             TitleScreenBackgroundTexture = game.Content.Load<Texture2D>("Backgrounds/Startscreen_background_spritesheet");
+            HeartSpritesheetTexture = game.Content.Load<Texture2D>("Terrain/Heart_spritesheet");
             Title = game.Content.Load<Texture2D>("Fonts/Title");
             SpikeTexture = game.Content.Load<Texture2D>("Terrain/Spikes");
             ButtonFont = game.Content.Load<SpriteFont>("Fonts/ButtonText");

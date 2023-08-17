@@ -46,6 +46,10 @@ namespace Platformer.Entities
             }
         }
 
+        //health
+        private bool isInvincible;
+        private double invincibleDurationLimit;
+        private double invincibleCurrentDuration;
 
         public PlayerCharacter(Vector2 spawn)
         {
@@ -63,7 +67,9 @@ namespace Platformer.Entities
             Health = 3;
             animationHandler = new PlayerAnimationHandler();
             IsDead= false;
-            Tag = CollisionTag.PLAYER;
+            isInvincible= false;
+            invincibleCurrentDuration= 0f;
+            invincibleDurationLimit = 0f;
         }
 
         public override void Update(GameTime gameTime)
@@ -71,13 +77,8 @@ namespace Platformer.Entities
             ReadInput(gameTime);
             Move(gameTime);
             CollisionManager.Instance().HandleCollisions(this);
-            if (Health <=0)
-            {
-                if (animationHandler.CurrentAnimation.IsLastFrame)
-                {
-                    IsDead= true;
-                }
-            }
+            CheckHealth();
+            CheckInvincibility(gameTime);
             Animate(gameTime);
         }
 
@@ -98,10 +99,11 @@ namespace Platformer.Entities
         }
         public override void TakeDamage(int damage)
         {
-            if (!IsInvincible)
+            if (!isInvincible)
             {
                 Health -= damage;
             }
+            SetInvincible(1d);
             animationHandler.PlayFullAnimation(Animations[6]);
             animationHandler.Blink(1d, 0.05);
         }
@@ -118,10 +120,43 @@ namespace Platformer.Entities
             keyboardDirectionTranslator.InputDisabledTimeLimit = duration;
             keyboardDirectionTranslator.InputDisabledTimeCount = 0;
         }
-
+        public void GainHealth(int health)
+        {
+            Health += health;
+        }
+        public void SetInvincible(double duration)
+        {
+            invincibleDurationLimit = duration;
+            invincibleCurrentDuration= 0;
+            isInvincible= true;
+        }
         private void ReadInput(GameTime gameTime)
         {
            CurrentDirection = keyboardDirectionTranslator.Translate(gameTime);
+        }
+        private void CheckHealth()
+        {
+            if (Health <= 0)
+            {
+                if (animationHandler.CurrentAnimation.IsLastFrame)
+                {
+                    IsDead = true;
+                }
+            }
+           
+        }
+        private void CheckInvincibility(GameTime gameTime)
+        { 
+            if (isInvincible)
+            {
+                invincibleCurrentDuration += gameTime.ElapsedGameTime.TotalSeconds;
+                if (invincibleCurrentDuration>= invincibleDurationLimit) 
+                {
+                    invincibleCurrentDuration = 0;
+                    isInvincible= false;
+                    invincibleDurationLimit= 0;
+                }
+            }
         }
     }
 }
