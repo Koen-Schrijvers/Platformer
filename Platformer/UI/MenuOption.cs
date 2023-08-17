@@ -41,7 +41,6 @@ namespace Platformer.UI
         }
         public void Execute()
         {
-            Debug.WriteLine("called");
             MenuAction();
         }
     }

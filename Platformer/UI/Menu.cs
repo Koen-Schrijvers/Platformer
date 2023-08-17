@@ -17,6 +17,7 @@ namespace Platformer.UI
         private int selectedOption;
         private bool button1Pressed;
         private bool button2Pressed;
+        private bool button3Pressed;
 
         public Menu(List<MenuOption> options) 
         { 
@@ -43,6 +44,9 @@ namespace Platformer.UI
                         option.Key)
                     );
                 currentY += height + buffer;
+                button1Pressed = true;
+                button2Pressed = true;
+                button3Pressed= true;
             }
         }
         public void Update(GameTime gameTime)
@@ -66,6 +70,11 @@ namespace Platformer.UI
                     selectedOption = options.Count - 1;
                 }
             }
+            if (keyboard.IsKeyDown(Keys.Enter) && !button3Pressed)
+            {
+                button3Pressed = true;
+                options[selectedOption].Execute();
+            }
             if (keyboard.IsKeyUp(Keys.Down) && keyboard.IsKeyUp(Keys.S))
             {
                 button1Pressed = false;
@@ -74,10 +83,11 @@ namespace Platformer.UI
             {
                 button2Pressed = false;
             }
-            if (keyboard.IsKeyDown(Keys.Enter))
+            if (keyboard.IsKeyUp(Keys.Enter))
             {
-                options[selectedOption].Execute();
+                button3Pressed = false;
             }
+           
         }
         public void Draw(SpriteBatch spriteBatch)
         {

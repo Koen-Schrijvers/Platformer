@@ -38,8 +38,11 @@ namespace Platformer.Levels
                 new Mushroom(new Vector2(450, 300), 410, 522)
             };
             player = new PlayerCharacter(new Vector2(300,300));
-            Pickups= new List<BasePickup>();
-            Pickups.Add(new Heart(new Vector2(128,408), new Vector2(1f, 1f)));
+            Pickups = new List<BasePickup>
+            {
+                new Heart(new Vector2(128, 408), new Vector2(1f, 1f)),
+                new Apple(new Vector2(760f, 280f), new Vector2(1f,1f))
+            };
             GameBoard = new int[,] {
                 { 4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
                 { 7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
@@ -73,10 +76,10 @@ namespace Platformer.Levels
         public void Update(GameTime gameTime)
         {
             player.Update(gameTime);
-            if(player.IsDead) GameManager.Instance().ChangeScreen(new StartScreen());
+            if(player.IsDead) GameManager.Instance().ChangeScreen(new GameOverScreen());
             for (int i = 0; i < Enemies.Count; i ++)
             {
-                Enemies[i].Update(gameTime);
+                Enemies[i].Update(gameTime); 
                 if (Enemies[i].IsDead) {
                     Collidables.Remove(Enemies[i]);
                     Enemies.RemoveAt(i);

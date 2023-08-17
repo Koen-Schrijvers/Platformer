@@ -20,6 +20,11 @@ namespace Platformer.Managers
         public Texture2D HeartSpritesheetTexture { get; set; }
         public SpriteFont ButtonFont { get; set; }
         public Texture2D SpikeTexture { get; set; }
+        public Texture2D VictoryBackgroundTexture { get; set; }
+        public Texture2D GameOverBackgroundTexture { get; set; }
+        public Texture2D AppleSpritesheetTexture { get; set; }
+        public Texture2D Victory { get; set; }
+        public Texture2D GameOver { get; set; }
         private static ContentManager instance;
         private ContentManager(){}
         public static ContentManager Instance()
@@ -37,8 +42,13 @@ namespace Platformer.Managers
             LevelBackgroundTexture = game.Content.Load<Texture2D>("Backgrounds/Level_background");
             TitleScreenBackgroundTexture = game.Content.Load<Texture2D>("Backgrounds/Startscreen_background_spritesheet");
             HeartSpritesheetTexture = game.Content.Load<Texture2D>("Terrain/Heart_spritesheet");
+            AppleSpritesheetTexture = game.Content.Load<Texture2D>("Terrain/Apple_spritesheet");
             Title = game.Content.Load<Texture2D>("Fonts/Title");
+            GameOver = game.Content.Load<Texture2D>("Fonts/GameOver");
             SpikeTexture = game.Content.Load<Texture2D>("Terrain/Spikes");
+            GameOverBackgroundTexture = game.Content.Load<Texture2D>("Backgrounds/GameOver_background");
+            VictoryBackgroundTexture = game.Content.Load<Texture2D>("Backgrounds/Victory_background");
+            Victory = game.Content.Load<Texture2D>("Fonts/Victory");
             ButtonFont = game.Content.Load<SpriteFont>("Fonts/ButtonText");
         }
     }

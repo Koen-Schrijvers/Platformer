@@ -23,7 +23,6 @@ namespace Platformer.Managers
         }
         public void Initialize(Game1 game)
         {
-            ContentManager.Instance().Initialize(game);
             this.game = game;
             currentScreen = new StartScreen();
         }
