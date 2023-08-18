@@ -18,6 +18,7 @@ namespace Platformer.Levels
     {
         public Level2()
         {
+            Projectiles= new List<Projectile>();
             Blocks = new List<Block>();
             Enemies = new List<BaseEnemy>
             {
@@ -50,7 +51,6 @@ namespace Platformer.Levels
                 0,
                 Game1.ScreenHeight - GameBoard.GetLength(0) * 16
                 );
-            CollisionManager.Instance().CurrentLevel = this;
             InitializeBlocks();
             Collidables = new List<ICollidable>();
             Collidables.AddRange(Blocks);

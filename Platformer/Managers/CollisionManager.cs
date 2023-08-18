@@ -43,7 +43,6 @@ namespace Platformer.Managers
             {
                 x.CollisionEvent.Execute(entity,x);
             });
-            // zorg dat enemies enkel met terrain collide of geen collisions doen
         }
     }
 }

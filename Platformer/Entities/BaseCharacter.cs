@@ -52,6 +52,10 @@ namespace Platformer.Entities
         public int Health { get; protected set; }
         public bool IsDead { get; protected set; }
 
+
+
+
+
         public abstract void Update(GameTime gameTime);
        
         public virtual void Draw(SpriteBatch spriteBatch)
@@ -61,7 +65,7 @@ namespace Platformer.Entities
 
         protected virtual void Move(GameTime gameTime)
         {
-            MovementBehaviour.Move(this, gameTime);
+            MovementBehaviour.Move(this,gameTime);
         }
 
         protected virtual void Animate(GameTime gameTime)
@@ -71,13 +75,7 @@ namespace Platformer.Entities
         public abstract void TakeDamage(int damage);
         protected virtual void CheckHealth()
         {
-            if (Health <= 0)
-            {
-                if (animationHandler.CurrentAnimation.IsLastFrame)
-                {
-                    IsDead = true;
-                }
-            }
+            IsDead = Health <=0 && animationHandler.CurrentAnimation.IsLastFrame;
         }
 
     }
