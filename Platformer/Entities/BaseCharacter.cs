@@ -1,7 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using Platformer.AnimationUtil.Animation_handlers;
-using Platformer.AnimationUtil;
 using Platformer.Input;
 using Platformer.Movement.MovementBehaviours;
 using Platformer.Movement;
@@ -12,6 +10,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Platformer.AnimationUtil.Animation_handlers;
+using Platformer.AnimationUtil;
 
 namespace Platformer.Entities
 {
@@ -54,18 +54,31 @@ namespace Platformer.Entities
 
         public abstract void Update(GameTime gameTime);
        
-        public void Draw(SpriteBatch spriteBatch)
+        public virtual void Draw(SpriteBatch spriteBatch)
         {
             this.animationHandler.Draw(spriteBatch, this, Position);
         }
 
-        protected abstract void Move(GameTime gameTime);
+        protected virtual void Move(GameTime gameTime)
+        {
+            MovementBehaviour.Move(this, gameTime);
+        }
 
-        protected void Animate(GameTime gameTime)
+        protected virtual void Animate(GameTime gameTime)
         {
             animationHandler.Animate(gameTime, this);
         }
         public abstract void TakeDamage(int damage);
-      
+        protected virtual void CheckHealth()
+        {
+            if (Health <= 0)
+            {
+                if (animationHandler.CurrentAnimation.IsLastFrame)
+                {
+                    IsDead = true;
+                }
+            }
+        }
+
     }
 }

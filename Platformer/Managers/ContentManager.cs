@@ -25,6 +25,7 @@ namespace Platformer.Managers
         public Texture2D AppleSpritesheetTexture { get; set; }
         public Texture2D Victory { get; set; }
         public Texture2D GameOver { get; set; }
+        public Texture2D TurtleTexture { get; set; }
         private static ContentManager instance;
         private ContentManager(){}
         public static ContentManager Instance()
@@ -44,6 +45,7 @@ namespace Platformer.Managers
             HeartSpritesheetTexture = game.Content.Load<Texture2D>("Terrain/Heart_spritesheet");
             AppleSpritesheetTexture = game.Content.Load<Texture2D>("Terrain/Apple_spritesheet");
             Title = game.Content.Load<Texture2D>("Fonts/Title");
+            TurtleTexture = game.Content.Load<Texture2D>("Entities/Enemies/Turtle");
             GameOver = game.Content.Load<Texture2D>("Fonts/GameOver");
             SpikeTexture = game.Content.Load<Texture2D>("Terrain/Spikes");
             GameOverBackgroundTexture = game.Content.Load<Texture2D>("Backgrounds/GameOver_background");

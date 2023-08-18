@@ -134,17 +134,6 @@ namespace Platformer.Entities
         {
            CurrentDirection = keyboardDirectionTranslator.Translate(gameTime);
         }
-        private void CheckHealth()
-        {
-            if (Health <= 0)
-            {
-                if (animationHandler.CurrentAnimation.IsLastFrame)
-                {
-                    IsDead = true;
-                }
-            }
-           
-        }
         private void CheckInvincibility(GameTime gameTime)
         { 
             if (isInvincible)
