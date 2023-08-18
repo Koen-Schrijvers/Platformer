@@ -57,7 +57,7 @@ namespace Platformer.Entities
         private double invincibleCurrentDuration;
 
         //projectile
-        public int ammunition { get; set; }
+        public int Ammunition { get; set; }
 
         public PlayerCharacter(Vector2 spawn)
         {
@@ -78,7 +78,7 @@ namespace Platformer.Entities
             isInvincible= false;
             invincibleCurrentDuration= 0f;
             invincibleDurationLimit = 0f;
-            ammunition = 1;
+            Ammunition = 1;
             mouseReader = new MouseReader();
             mouse = new Vector2(-1, -1);
         }
@@ -162,13 +162,13 @@ namespace Platformer.Entities
         private void Act(GameTime gameTime)
         {
             Move(gameTime);
-            if (mouse.X != -1 && mouse.Y != -1 && ammunition > 0) FireProjectile();
+            if (mouse.X != -1 && mouse.Y != -1 && Ammunition > 0) FireProjectile();
         }
         private void FireProjectile()
         {
             Vector2 direction = Vector2.Normalize(new Vector2(mouse.X, mouse.Y) - Hitbox.CenterPoint);
             GameManager.Instance().currentLevel.AddProjectile(new Projectile(new Vector2(1f, 1f), Position , direction));
-            ammunition--;
+            Ammunition--;
         }
     }
 }
