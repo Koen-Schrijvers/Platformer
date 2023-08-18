@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 using Platformer.Managers;
 using Platformer.UI;
 using System;
@@ -27,6 +28,8 @@ namespace Platformer.Screens
                 },
                 new Rectangle((Game1.ScreenWidth - menuWidth) / 2, (Game1.ScreenHeight - menuHeight) / 2 + 50, menuWidth, menuHeight),
                 ContentManager.Instance().ButtonTexture, 10);
+            MediaPlayer.Play(ContentManager.Instance().DefeatSoundtrack);
+            MediaPlayer.IsRepeating = false;
         }
     }
 }

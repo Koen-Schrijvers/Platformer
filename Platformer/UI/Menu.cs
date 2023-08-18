@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using Platformer.Managers;
 using Platformer.UI;
 using System;
@@ -19,10 +21,6 @@ namespace Platformer.UI
         private bool button2Pressed;
         private bool button3Pressed;
 
-        public Menu(List<MenuOption> options) 
-        { 
-            this.options = options;
-        }
         public Menu(Dictionary<string, Action> options, Rectangle destRect, 
             Texture2D optionTexture = null, int buffer = 5)
         {
@@ -60,6 +58,7 @@ namespace Platformer.UI
                 {
                     selectedOption = 0;
                 }
+                ContentManager.Instance().MenuSelectionSoundEffect.Play();
             }
             if ((keyboard.IsKeyDown(Keys.Up) || keyboard.IsKeyDown(Keys.Z)) && !button2Pressed)
             {
@@ -69,6 +68,7 @@ namespace Platformer.UI
                 {
                     selectedOption = options.Count - 1;
                 }
+                ContentManager.Instance().MenuSelectionSoundEffect.Play();
             }
             if (keyboard.IsKeyDown(Keys.Enter) && !button3Pressed)
             {

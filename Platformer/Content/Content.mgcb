@@ -13,6 +13,48 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin Audio/Defeat_Soundtrack.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Audio/Defeat_Soundtrack.mp3
+
+#begin Audio/Hurt_Soundeffect.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Hurt_Soundeffect.wav
+
+#begin Audio/Jump_Soundeffect.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Jump_Soundeffect.wav
+
+#begin Audio/Mario_Soundtrack.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Audio/Mario_Soundtrack.mp3
+
+#begin Audio/MenuSelection_Soundeffect.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/MenuSelection_Soundeffect.wav
+
+#begin Audio/Osrs_Soundtrack.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Audio/Osrs_Soundtrack.mp3
+
+#begin Audio/Victory_Soundtrack.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Audio/Victory_Soundtrack.mp3
+
 #begin Backgrounds/GameOver_background.png
 /importer:TextureImporter
 /processor:TextureProcessor

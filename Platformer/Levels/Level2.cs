@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Media;
 
 namespace Platformer.Levels
 {
@@ -58,6 +59,7 @@ namespace Platformer.Levels
             Collidables.AddRange(Pickups);
             backgroundTexture = ContentManager.Instance().LevelBackgroundTexture;
             hud = new HUD(player);
+            MediaPlayer.Play(ContentManager.Instance().MarioSoundtrack);
         }
     }
 }

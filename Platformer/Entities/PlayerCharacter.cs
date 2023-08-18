@@ -114,9 +114,10 @@ namespace Platformer.Entities
             {
                 Health -= damage;
             }
-            SetInvincible(1d);
+            SetInvincible(0.5d);
             animationHandler.PlayFullAnimation(Animations[6]);
-            animationHandler.Blink(1d, 0.05);
+            animationHandler.Blink(0.5d, 0.05);
+            ContentManager.Instance().HurtSoundEffect.Play();
         }
         public void KnockBack(float speedX, float speedY)
         {

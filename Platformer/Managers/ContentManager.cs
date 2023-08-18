@@ -1,4 +1,7 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +30,15 @@ namespace Platformer.Managers
         public Texture2D GameOver { get; set; }
         public Texture2D TurtleTexture { get; set; }
         public Texture2D BulletTexture { get; set; }
+        public Song MenuSoundtrack {get; set;}
+        public Song MarioSoundtrack {get; set;}
+        public Song VictorySoundtrack { get; set; }
+        public Song DefeatSoundtrack { get; set; }
+        public SoundEffect MenuSelectionSoundEffect {get; set; }
+        public SoundEffect JumpSoundEffect { get; set; }
+        public SoundEffect HurtSoundEffect { get; set; }
+
+
         private static ContentManager instance;
         private ContentManager(){}
         public static ContentManager Instance()
@@ -54,6 +66,13 @@ namespace Platformer.Managers
             VictoryBackgroundTexture = game.Content.Load<Texture2D>("Backgrounds/Victory_background");
             Victory = game.Content.Load<Texture2D>("Fonts/Victory");
             ButtonFont = game.Content.Load<SpriteFont>("Fonts/ButtonText");
+            MenuSoundtrack = game.Content.Load<Song>("Audio/Osrs_Soundtrack");
+            VictorySoundtrack = game.Content.Load<Song>("Audio/Victory_Soundtrack");
+            DefeatSoundtrack = game.Content.Load<Song>("Audio/Defeat_Soundtrack");
+            MenuSelectionSoundEffect = game.Content.Load<SoundEffect>("Audio/MenuSelection_Soundeffect");
+            MarioSoundtrack = game.Content.Load<Song>("Audio/Mario_Soundtrack");
+            JumpSoundEffect = game.Content.Load<SoundEffect>("Audio/Jump_Soundeffect");
+            HurtSoundEffect = game.Content.Load<SoundEffect>("Audio/Hurt_Soundeffect");
         }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Media;
+using Platformer.Managers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,11 +53,13 @@ namespace Platformer.Movement.MovementBehaviours
                 {
                     movable.CurrentSpeedY = jumpImpulse;
                     IsGrounded = false;
+                    ContentManager.Instance().JumpSoundEffect.Play();
                 }
                 else if (!HasDoubleJumped)
                 {
                     movable.CurrentSpeedY = jumpImpulse;
                     HasDoubleJumped = true;
+                    ContentManager.Instance().JumpSoundEffect.Play();
                 }
             }
             movable.CurrentSpeedY += gravity;

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 using Platformer.AnimationUtil;
 using Platformer.Levels;
 using Platformer.Managers;
@@ -31,15 +32,16 @@ namespace Platformer.Screens
             backgroundAnimationSpriteSheet = ContentManager.Instance().TitleScreenBackgroundTexture;
             backgroundAnimation = SpriteCutter.CreateSingleAnimation(
                 ContentManager.Instance().TitleScreenBackgroundTexture,
-                8,
-                10
-                );
+                8,10);
             menu = new Menu(new Dictionary<string, Action>() {
                 { "level 1", ()=>{ GameManager.Instance().StartLevel(new Level1()); } },
                 { "level 2", ()=>{ GameManager.Instance().StartLevel(new Level2()); } },
                 { "quit", ()=>{ GameManager.Instance().QuitGame(); } },
             }, new Rectangle((Game1.ScreenWidth - menuWidth)/2, (Game1.ScreenHeight - menuHeight)/2 + 50, menuWidth, menuHeight), ContentManager.Instance().ButtonTexture, 10);
-            titleSpeed = new Vector2(0f,0.4f); 
+            titleSpeed = new Vector2(0f,0.4f);
+            MediaPlayer.Play(ContentManager.Instance().MenuSoundtrack);
+            MediaPlayer.IsRepeating = true;
+            MediaPlayer.Volume= 0.1f;
         }
         public void Update(GameTime gameTime)
         {

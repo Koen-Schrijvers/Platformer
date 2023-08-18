@@ -75,7 +75,7 @@ namespace Platformer.Entities
         public abstract void TakeDamage(int damage);
         protected virtual void CheckHealth()
         {
-            IsDead = Health <=0 && animationHandler.CurrentAnimation.IsLastFrame;
+            IsDead = Health <=0 && animationHandler.CurrentAnimation.IsLastFrame || IsDead;
         }
 
     }
