@@ -26,6 +26,7 @@ namespace Platformer.Managers
         public Texture2D Victory { get; set; }
         public Texture2D GameOver { get; set; }
         public Texture2D TurtleTexture { get; set; }
+        public Texture2D BulletTexture { get; set; }
         private static ContentManager instance;
         private ContentManager(){}
         public static ContentManager Instance()
@@ -48,6 +49,7 @@ namespace Platformer.Managers
             TurtleTexture = game.Content.Load<Texture2D>("Entities/Enemies/Turtle");
             GameOver = game.Content.Load<Texture2D>("Fonts/GameOver");
             SpikeTexture = game.Content.Load<Texture2D>("Terrain/Spikes");
+            BulletTexture = game.Content.Load<Texture2D>("Entities/projectiles/Bullet");
             GameOverBackgroundTexture = game.Content.Load<Texture2D>("Backgrounds/GameOver_background");
             VictoryBackgroundTexture = game.Content.Load<Texture2D>("Backgrounds/Victory_background");
             Victory = game.Content.Load<Texture2D>("Fonts/Victory");

@@ -9,6 +9,9 @@ using Platformer.Utilities;
 using Platformer.Utilities.CollisionEvents;
 using Platformer.AnimationUtil.Animation_handlers;
 using Platformer.Managers;
+using Microsoft.Xna.Framework.Input;
+using SharpDX.XAudio2;
+using Microsoft.VisualBasic.Devices;
 
 namespace Platformer.Entities
 {
@@ -17,6 +20,8 @@ namespace Platformer.Entities
 
         //input
         private KeyboardDirectionTranslator keyboardDirectionTranslator;
+        private MouseReader mouseReader;
+        private Vector2 mouse;
 
         //movement
         public bool HasDoubleJumped
@@ -51,6 +56,9 @@ namespace Platformer.Entities
         private double invincibleDurationLimit;
         private double invincibleCurrentDuration;
 
+        //projectile
+        public int ammunition { get; set; }
+
         public PlayerCharacter(Vector2 spawn)
         {
             Texture = ContentManager.Instance().FrogTexture;
@@ -70,12 +78,15 @@ namespace Platformer.Entities
             isInvincible= false;
             invincibleCurrentDuration= 0f;
             invincibleDurationLimit = 0f;
+            ammunition = 1;
+            mouseReader = new MouseReader();
+            mouse = new Vector2(-1, -1);
         }
 
         public override void Update(GameTime gameTime)
         {
             ReadInput(gameTime);
-            Move(gameTime);
+            Act(gameTime);
             CollisionManager.Instance().HandleCollisions(this);
             CheckHealth();
             CheckInvincibility(gameTime);
@@ -132,7 +143,8 @@ namespace Platformer.Entities
         }
         private void ReadInput(GameTime gameTime)
         {
-           CurrentDirection = keyboardDirectionTranslator.Translate(gameTime);
+            CurrentDirection = keyboardDirectionTranslator.Translate(gameTime);
+            mouse = mouseReader.ReadInput();
         }
         private void CheckInvincibility(GameTime gameTime)
         { 
@@ -146,6 +158,17 @@ namespace Platformer.Entities
                     invincibleDurationLimit= 0;
                 }
             }
+        }
+        private void Act(GameTime gameTime)
+        {
+            Move(gameTime);
+            if (mouse.X != -1 && mouse.Y != -1 && ammunition > 0) FireProjectile();
+        }
+        private void FireProjectile()
+        {
+            Vector2 direction = Vector2.Normalize(new Vector2(mouse.X, mouse.Y) - Hitbox.CenterPoint);
+            GameManager.Instance().currentLevel.AddProjectile(new Projectile(new Vector2(1f, 1f), Position , direction));
+            ammunition--;
         }
     }
 }

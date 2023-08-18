@@ -28,6 +28,7 @@ namespace Platformer.Levels
         public Point DrawOffset { get; set; }
         public List<BaseEnemy> Enemies { get; set; }
         public List<BasePickup> Pickups { get; set; }
+        public List<Projectile> Projectiles { get; set; }
         public List<ICollidable> Collidables { get; set; }
 
        
@@ -52,6 +53,15 @@ namespace Platformer.Levels
                     Pickups.RemoveAt(i);
                 };
             }
+            for (int i = 0; i< Projectiles.Count; i++)
+            {
+                Projectiles[i].Update(gameTime);
+                if (Projectiles[i].IsDead)
+                {
+                    Collidables.Remove(Projectiles[i]);
+                    Projectiles.RemoveAt(i);
+                };
+            }
             if (Keyboard.GetState().IsKeyDown(Keys.Escape)) GameManager.Instance().ChangeScreen(new StartScreen());
         }
         public void Draw(SpriteBatch spriteBatch)
@@ -60,6 +70,7 @@ namespace Platformer.Levels
             Blocks.ForEach(x => x.Draw(spriteBatch));
             Enemies.ForEach(x => x.Draw(spriteBatch));
             Pickups.ForEach(x => x.Draw(spriteBatch));
+            Projectiles.ForEach(x => x.Draw(spriteBatch));
             player.Draw(spriteBatch);
             hud.Draw(spriteBatch);
         }
@@ -76,6 +87,11 @@ namespace Platformer.Levels
                     }
                 }
             }
+        }
+        public void AddProjectile(Projectile projectile)
+        {
+            Projectiles.Add(projectile);
+            Collidables.Add(projectile);
         }
     }
 }

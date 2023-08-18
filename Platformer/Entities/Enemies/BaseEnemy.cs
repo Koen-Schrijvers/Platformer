@@ -13,7 +13,6 @@ namespace Platformer.Entities.Enemies
     internal abstract class BaseEnemy : BaseCharacter
     {
         protected IAi ai;
-
         public override void Update(GameTime gameTime)
         {
             ai.Act();

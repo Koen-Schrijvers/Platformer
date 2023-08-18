@@ -15,6 +15,7 @@ namespace Platformer.Managers
         private static GameManager instance;
         private IScreen currentScreen;
         private Game1 game;
+        public BaseLevel currentLevel { get; set; }
         private GameManager() { }
         public static GameManager Instance()
         {
@@ -37,6 +38,12 @@ namespace Platformer.Managers
         public void ChangeScreen(IScreen newScreen)
         {
             currentScreen = newScreen;
+        }
+        public void StartLevel(BaseLevel level)
+        {
+            currentScreen = level;
+            currentLevel = level;
+            CollisionManager.Instance().CurrentLevel = level;
         }
         public void QuitGame()
         {
