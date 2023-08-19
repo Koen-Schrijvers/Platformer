@@ -37,7 +37,7 @@ namespace Platformer.Entities.Enemies
             this.Texture = ContentManager.Instance().TurtleTexture;
             this.Animations = SpriteCutter.CreateAnimations(Texture, new int[2] { 14, 5 });
             this.Position = spawn;
-            this.hitbox = new FloatRectangle(7, 6, 30, 20);
+            this.hitbox = new FloatRectangle(7, 6, 30, 17);
             this.CurrentDirection = new Vector2(1, 0);
             this.BaseSpeed = new Vector2(0.5f, 0);
             this.CollisionEvent = new TurtleCollisionEvent();

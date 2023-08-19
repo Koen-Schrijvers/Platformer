@@ -27,10 +27,10 @@ namespace Platformer.Utilities.CollisionEvents
             {
                 o.Position -= new Vector2(0,overlapY);
                 IGravity g = other as IGravity;
-                if(overlapY> 0 && g != null)
+                if(g != null)
                 {
-                    g.IsGrounded= true;
                     g.CurrentSpeedY = 0f;
+                    if(overlapY>0) g.IsGrounded = true;
                 }
             }
         }

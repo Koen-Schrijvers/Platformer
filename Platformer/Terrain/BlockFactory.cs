@@ -95,6 +95,9 @@ namespace Platformer.Terrain
                 case BlockType.PLATFORM_MIDDLE:
                     frame = new Rectangle(160, 48, 16, 16);
                     break;
+                case BlockType.PILLAR_MIDDLE:
+                    frame = new Rectangle(176, 32, 16, 16);
+                    break;
                 default:
                     frame = new Rectangle(240, 48, 16, 16);
                     break;

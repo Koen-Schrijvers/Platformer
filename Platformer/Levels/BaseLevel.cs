@@ -22,7 +22,7 @@ namespace Platformer.Levels
     {
         protected Texture2D backgroundTexture;
         protected HUD hud;
-        public PlayerCharacter player;
+        public PlayerCharacter player { get; set; }
         public int[,] GameBoard { get; set; }
         public List<Block> Blocks { get; set; }
         public Point DrawOffset { get; set; }
