@@ -39,8 +39,8 @@ namespace Platformer.Entities
             get
             {
                 return new FloatRectangle(
-                    this.Position.X + (this.hitbox.X * Scale.X),
-                    this.Position.Y + (this.hitbox.Y * Scale.Y),
+                    this.Position.X + this.hitbox.X,
+                    this.Position.Y + this.hitbox.Y,
                     this.hitbox.Width * Scale.X,
                     this.hitbox.Height * Scale.Y
                     );
