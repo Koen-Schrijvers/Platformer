@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 
 namespace Platformer.Levels
 {
-    internal class BaseLevel: IScreen
+    internal abstract class BaseLevel: IScreen
     {
         protected Texture2D backgroundTexture;
         protected HUD hud;
@@ -32,6 +32,18 @@ namespace Platformer.Levels
         public List<ICollidable> Collidables { get; set; }
 
        
+        public BaseLevel(int[,] gameBoard)
+        {
+            GameBoard = gameBoard;
+            DrawOffset = new Point(0, Game1.ScreenHeight - GameBoard.GetLength(0) * 16);
+            Blocks = new();
+            Enemies = new();
+            Pickups = new();
+            Projectiles = new();
+            InitializeBlocks();
+            InitializeEntities();
+            InitializeCollidables();
+        }
         public void Update(GameTime gameTime)
         {
             player.Update(gameTime);
@@ -76,7 +88,6 @@ namespace Platformer.Levels
         }
         protected void InitializeBlocks()
         {
-            Blocks = new List<Block>();
             for (int i = 0; i < GameBoard.GetLength(0); i++)
             {
                 for (int j = 0; j < GameBoard.GetLength(1); j++)
@@ -92,6 +103,15 @@ namespace Platformer.Levels
         {
             Projectiles.Add(projectile);
             Collidables.Add(projectile);
+        }
+        protected abstract void InitializeEntities();
+        protected void InitializeCollidables()
+        {
+            Collidables = new List<ICollidable>();
+            Collidables.AddRange(Blocks);
+            Collidables.AddRange(Enemies);
+            Collidables.AddRange(Pickups);
+            Collidables.AddRange(Projectiles);
         }
     }
 }

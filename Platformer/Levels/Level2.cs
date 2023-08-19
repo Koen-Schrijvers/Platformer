@@ -17,21 +17,8 @@ namespace Platformer.Levels
 {
     internal class Level2 : BaseLevel
     {
-        public Level2()
-        {
-            Projectiles= new List<Projectile>();
-            Blocks = new List<Block>();
-            Enemies = new List<BaseEnemy>
-            {
-                new Turtle(new Vector2(450, 300), 410, 522)
-            };
-            player = new PlayerCharacter(new Vector2(300, 300));
-            Pickups = new List<BasePickup>
-            {
-                new Heart(new Vector2(128, 408), new Vector2(1f, 1f)),
-                new Apple(new Vector2(760f, 280f), new Vector2(1f,1f))
-            };
-            GameBoard = new int[,] {
+
+        public Level2() : base(new int[,] {
                 { 4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
                 { 7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
                 { 7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0 },
@@ -47,19 +34,19 @@ namespace Platformer.Levels
                 { 7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,6,6,7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
                 { 7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,6,6,7,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19 },
                 {12,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,9,6,6,12,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3 }
-            };
-            DrawOffset = new Point(
-                0,
-                Game1.ScreenHeight - GameBoard.GetLength(0) * 16
-                );
-            InitializeBlocks();
-            Collidables = new List<ICollidable>();
-            Collidables.AddRange(Blocks);
-            Collidables.AddRange(Enemies);
-            Collidables.AddRange(Pickups);
+            })
+        {
             backgroundTexture = ContentManager.Instance().LevelBackgroundTexture;
             hud = new HUD(player);
             MediaPlayer.Play(ContentManager.Instance().MarioSoundtrack);
+        }
+
+        protected override void InitializeEntities()
+        {
+            player = new PlayerCharacter(new Vector2(300, 300));
+            Enemies.Add(new Mushroom(new Vector2(450, 300), 410, 522));
+            Pickups.Add(new Heart(new Vector2(128, 408), new Vector2(1f, 1f)));
+            Pickups.Add(new Apple(new Vector2(760f, 280f), new Vector2(1f, 1f)));
         }
     }
 }
