@@ -129,6 +129,7 @@ namespace Platformer.Entities
         }
         public void KnockBack(float speedX, float speedY)
         {
+            // Werkt niet 100%
             IsGrounded = false;
             CurrentSpeedX = speedX;
             CurrentSpeedY = speedY;

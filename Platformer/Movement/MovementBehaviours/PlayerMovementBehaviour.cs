@@ -9,18 +9,10 @@ using System.Threading.Tasks;
 
 namespace Platformer.Movement.MovementBehaviours
 {
-    public enum MovementState
-    {
-        GROUNDED,
-        AIRBORNE,
-        WALL_HANGING_LEFT,
-        WALL_HANGING_RIGHT,
-    }
     internal class PlayerMovementBehaviour : IMovementBehaviour
     {
         public bool IsGrounded { get; set; } = false;
         public bool HasDoubleJumped { get; set; } = false;
-        public bool IsWallHanging { get; set; } = false;
         private float gravity = 0.3f;
         private float jumpImpulse = -5.0f;
         private float aerialAccelerationX = 0.5f;
