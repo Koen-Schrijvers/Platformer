@@ -41,6 +41,7 @@ namespace Platformer.Entities.Enemies
         {
             Health -= damage;
             animationHandler.PlayFullAnimation(Animations[1]);
+            ContentManager.Instance().HurtEnemySoundEffect.Play();
         }
     }
 }

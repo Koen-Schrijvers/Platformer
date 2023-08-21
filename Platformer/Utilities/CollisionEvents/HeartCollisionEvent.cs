@@ -1,4 +1,5 @@
 ﻿using Platformer.Entities;
+using Platformer.Managers;
 using Platformer.Terrain.Pickups;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,7 @@ namespace Platformer.Utilities.CollisionEvents
             {
                 p.GainHealth(1);
                 h.IsTaken= true;
+                ContentManager.Instance().PowerupSoundEffect.Play();
             }
         }
     }

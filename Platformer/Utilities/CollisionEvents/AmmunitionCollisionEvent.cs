@@ -1,4 +1,5 @@
 ﻿using Platformer.Entities;
+using Platformer.Managers;
 using Platformer.Terrain.Pickups;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,7 @@ namespace Platformer.Utilities.CollisionEvents
             if (a == null || p == null) return;
             p.Ammunition++;
             a.IsTaken = true;
+            ContentManager.Instance().AmmunitionSoundEffect.Play();
         }
     }
 }

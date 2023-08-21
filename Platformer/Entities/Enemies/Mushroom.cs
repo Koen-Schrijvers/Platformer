@@ -1,15 +1,9 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using Platformer.AnimationUtil.Animation_handlers;
+﻿using Platformer.AnimationUtil.Animation_handlers;
 using Platformer.AnimationUtil;
 using Platformer.Entities.AI;
 using Platformer.Movement.MovementBehaviours;
 using Platformer.Utilities.CollisionEvents;
 using Platformer.Utilities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Platformer.Movement;
 using Platformer.Managers;
@@ -53,6 +47,7 @@ namespace Platformer.Entities.Enemies
         {
             Health -= damage;
             animationHandler.PlayFullAnimation(Animations[2]);
+            ContentManager.Instance().HurtEnemySoundEffect.Play();
         }
        
     }
