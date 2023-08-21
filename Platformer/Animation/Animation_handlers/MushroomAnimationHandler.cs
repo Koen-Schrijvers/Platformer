@@ -13,7 +13,7 @@ namespace Platformer.AnimationUtil.Animation_handlers
     {
         protected override void SelectAnimation(IAnimated animated)
         {
-            Mushroom m = animated as Mushroom;
+            BaseEnemy m = animated as BaseEnemy;
             if (m.CurrentDirection.X == 1)
             {
                 m.SpriteEffects = SpriteEffects.FlipHorizontally;
