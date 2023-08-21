@@ -12,7 +12,7 @@ namespace Platformer.AnimationUtil.Animation_handlers
     {
         protected override void SelectAnimation(IAnimated animated)
         {
-            Turtle t = animated as Turtle;
+            BaseEnemy t = animated as BaseEnemy;
             if (t.CurrentDirection.X == 1)
             {
                 t.SpriteEffects = SpriteEffects.FlipHorizontally;

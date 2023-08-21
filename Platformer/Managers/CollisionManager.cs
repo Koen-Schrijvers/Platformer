@@ -44,5 +44,19 @@ namespace Platformer.Managers
                 x.CollisionEvent.Execute(entity,x);
             });
         }
+        public void HandleOnlyProjectileCollisions(ICollidable entity)
+        {
+            List<Projectile> collidables = CurrentLevel.Projectiles;
+            List<ICollidable> collisions = new List<ICollidable>();
+            collidables.ForEach(b =>
+            {
+                if (entity.Hitbox.Intersects(b.Hitbox)) collisions.Add(b);
+            });
+            collisions.Sort(new CollidableComparer(entity.Hitbox));
+            collisions.ForEach(x =>
+            {
+                x.CollisionEvent.Execute(entity, x);
+            });
+        }
     }
 }

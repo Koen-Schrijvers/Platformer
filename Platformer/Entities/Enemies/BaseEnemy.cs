@@ -21,5 +21,11 @@ namespace Platformer.Entities.Enemies
             CheckHealth();
             Animate(gameTime);
         }
+        protected override void CheckHealth()
+        {
+            base.CheckHealth();
+            if (Health<=0) GameManager.Instance().currentLevel.Collidables.Remove(this);
+            if (IsDead) GameManager.Instance().currentLevel.Enemies.Remove(this);
+        }
     }
 }

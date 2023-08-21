@@ -58,6 +58,11 @@ namespace Platformer.Entities
         {
             MovementBehaviour.Move(this, gameTime);
             IsDead = Position.X < 0 || Position.X > Game1.ScreenWidth || Position.Y < 0 || Position.Y > Game1.ScreenHeight || IsDead;
+            if (IsDead)
+            {
+                GameManager.Instance().currentLevel.Projectiles.Remove(this);
+                GameManager.Instance().currentLevel.Collidables.Remove(this);
+            }
         }
         public void Draw(SpriteBatch spriteBatch)
         {

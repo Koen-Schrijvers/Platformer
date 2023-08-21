@@ -103,6 +103,18 @@
 /processorParam:TextureFormat=Color
 /build:Backgrounds/Victory_background.png
 
+#begin Entities/enemies/Kamikaze.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Entities/enemies/Kamikaze.png
+
 #begin Entities/enemies/Mushroom.png
 /importer:TextureImporter
 /processor:TextureProcessor

@@ -37,6 +37,7 @@ namespace Platformer.Managers
         public SoundEffect MenuSelectionSoundEffect {get; set; }
         public SoundEffect JumpSoundEffect { get; set; }
         public SoundEffect HurtSoundEffect { get; set; }
+        public Texture2D KamikazeTexture { get; set; }
 
 
         private static ContentManager instance;
@@ -73,6 +74,7 @@ namespace Platformer.Managers
             MarioSoundtrack = game.Content.Load<Song>("Audio/Mario_Soundtrack");
             JumpSoundEffect = game.Content.Load<SoundEffect>("Audio/Jump_Soundeffect");
             HurtSoundEffect = game.Content.Load<SoundEffect>("Audio/Hurt_Soundeffect");
+            KamikazeTexture = game.Content.Load<Texture2D>("Entities/enemies/Kamikaze");
         }
     }
 }
