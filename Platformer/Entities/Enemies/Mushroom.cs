@@ -38,7 +38,7 @@ namespace Platformer.Entities.Enemies
             this.hitbox = new FloatRectangle(6, 12, 20, 20);
             this.CurrentDirection = new Vector2(1, 0);
             this.BaseSpeed = new Vector2(0.75f, 0);
-            this.CollisionEvent = new BasicEnemyCollisionEvent(this);
+            this.CollisionEvent = new BasicEnemyCollisionEvent();
             this.CurrentSpeedX = 0f;
             this.CurrentSpeedY = 0f;
             this.MovementBehaviour = new HorizontalSimpleMovementBehaviour();

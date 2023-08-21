@@ -13,10 +13,10 @@ namespace Platformer.Utilities.CollisionEvents
     {
         public override void Execute(ICollidable other, ICollidable thisObject)
         {
-            float overlapX = CalculateOverlapX(other.Hitbox, thisObject.Hitbox);
-            float overlapY = CalculateOverlapY(other.Hitbox, thisObject.Hitbox);
             PlayerCharacter p = other as PlayerCharacter;
             if (p == null) return;
+            float overlapX = CalculateOverlapX(other.Hitbox, thisObject.Hitbox);
+            float overlapY = CalculateOverlapY(other.Hitbox, thisObject.Hitbox);
             if (Math.Abs(overlapX /= p.Hitbox.Width) >= Math.Abs(overlapY /= p.Hitbox.Height) && overlapY > 0)
             {
                 Random rng = new();
