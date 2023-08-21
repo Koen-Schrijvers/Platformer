@@ -41,23 +41,23 @@ namespace Platformer.Input
         private Vector2 TranslateInputToDirection()
         {
             KeyboardState keyboard = Keyboard.GetState();
-            Vector2 direction = new Vector2(0,0); // is altijd 1 wegens zwaartekracht
-            if (keyboard.IsKeyDown(Keys.D))
+            Vector2 direction = new Vector2(0,0);
+            if (keyboard.IsKeyDown(Keys.D) || keyboard.IsKeyDown(Keys.Right))
             {
                 direction.X = 1;
             }
-            else if(keyboard.IsKeyDown(Keys.Q))
+            else if(keyboard.IsKeyDown(Keys.Q) || keyboard.IsKeyDown(Keys.Left))
             {
                 direction.X = -1;
             }
 
 
-            if (keyboard.IsKeyDown(Keys.Space) && !spacebar)
+            if ((keyboard.IsKeyDown(Keys.Space) || keyboard.IsKeyDown(Keys.Up) || keyboard.IsKeyDown(Keys.Down)) && !spacebar)
             { 
                 direction.Y = -1; 
                 spacebar = true;
             }
-            if(keyboard.IsKeyUp(Keys.Space)) 
+            if(keyboard.IsKeyUp(Keys.Space) && keyboard.IsKeyUp(Keys.Up) && keyboard.IsKeyUp(Keys.Down)) 
             {
                 spacebar =  false;
             }
