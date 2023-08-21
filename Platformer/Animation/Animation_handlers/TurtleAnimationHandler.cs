@@ -13,11 +13,11 @@ namespace Platformer.AnimationUtil.Animation_handlers
         protected override void SelectAnimation(IAnimated animated)
         {
             BaseEnemy t = animated as BaseEnemy;
-            if (t.CurrentDirection.X == 1)
+            if (t.CurrentDirection.X > 0)
             {
                 t.SpriteEffects = SpriteEffects.FlipHorizontally;
             }
-            else if (t.CurrentDirection.X == -1)
+            else if (t.CurrentDirection.X < -0)
             {
                 t.SpriteEffects = SpriteEffects.None;
             }
