@@ -17,7 +17,7 @@ namespace Platformer.AnimationUtil.Animation_handlers
             {
                 t.SpriteEffects = SpriteEffects.FlipHorizontally;
             }
-            else if (t.CurrentDirection.X < -0)
+            else if (t.CurrentDirection.X < 0)
             {
                 t.SpriteEffects = SpriteEffects.None;
             }
