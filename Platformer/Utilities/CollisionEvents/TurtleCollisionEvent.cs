@@ -1,4 +1,6 @@
-﻿using Platformer.Entities;
+﻿using Microsoft.Xna.Framework;
+using Platformer.Entities;
+using Platformer.Entities.Enemies;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +16,8 @@ namespace Platformer.Utilities.CollisionEvents
         public override void Execute(ICollidable other, ICollidable thisObject)
         {
             PlayerCharacter p = other as PlayerCharacter;
-            if (p == null) return;
+            BaseEnemy e = thisObject as BaseEnemy;
+            if (p == null || e == null) return;
             float overlapX = CalculateOverlapX(other.Hitbox, thisObject.Hitbox);
             float overlapY = CalculateOverlapY(other.Hitbox, thisObject.Hitbox);
             if (Math.Abs(overlapX /= p.Hitbox.Width) >= Math.Abs(overlapY /= p.Hitbox.Height) && overlapY > 0)
@@ -35,6 +38,7 @@ namespace Platformer.Utilities.CollisionEvents
             }
             p.TakeDamage(1);
             p.DisableInput(0.3d);
+            e.CurrentDirection *= -1;
         }
     }
 }
