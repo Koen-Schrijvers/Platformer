@@ -54,6 +54,7 @@ namespace Platformer.Levels
             player = new PlayerCharacter(new Vector2(60, 420));
             Enemies.Add(new Mushroom(new Vector2(550, 450), 450, 560));
             Enemies.Add(new Turtle(new Vector2(450, 250), 445, 485));
+            Enemies.Add(new KamikazeBird(new Vector2(550, 100)));
             Pickups.Add(new Heart(new Vector2(370, 440), new Vector2(1f, 1f)));
             Pickups.Add(new Heart(new Vector2(465, 250), new Vector2(1f, 1f)));
             Pickups.Add(new Apple(new Vector2(376, 130), new Vector2(1f, 1f)));

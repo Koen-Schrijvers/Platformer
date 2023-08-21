@@ -48,32 +48,9 @@ namespace Platformer.Levels
         {
             player.Update(gameTime);
             if(player.IsDead) GameManager.Instance().ChangeScreen(new GameOverScreen());
-            for (int i = 0; i < Enemies.Count; i ++)
-            {
-                Enemies[i].Update(gameTime); 
-                if (Enemies[i].IsDead) {
-                    Collidables.Remove(Enemies[i]);
-                    Enemies.RemoveAt(i);
-                };
-            }
-            for (int i = 0; i < Pickups.Count; i++)
-            {
-                Pickups[i].Update(gameTime);
-                if (Pickups[i].IsTaken)
-                {
-                    Collidables.Remove(Pickups[i]);
-                    Pickups.RemoveAt(i);
-                };
-            }
-            for (int i = 0; i< Projectiles.Count; i++)
-            {
-                Projectiles[i].Update(gameTime);
-                if (Projectiles[i].IsDead)
-                {
-                    Collidables.Remove(Projectiles[i]);
-                    Projectiles.RemoveAt(i);
-                };
-            }
+            for (int i = 0; i < Enemies.Count; i ++) Enemies[i].Update(gameTime); 
+            for (int i = 0; i < Pickups.Count; i++) Pickups[i].Update(gameTime);
+            for (int i = 0; i< Projectiles.Count; i++) Projectiles[i].Update(gameTime);
             if (Keyboard.GetState().IsKeyDown(Keys.Escape)) GameManager.Instance().ChangeScreen(new StartScreen());
         }
         public void Draw(SpriteBatch spriteBatch)

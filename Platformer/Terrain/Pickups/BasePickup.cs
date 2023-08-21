@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Platformer.AnimationUtil;
+using Platformer.Managers;
 using Platformer.Utilities;
 using Platformer.Utilities.CollisionEvents;
 using System;
@@ -24,6 +25,11 @@ namespace Platformer.Terrain.Pickups
         public virtual void Update(GameTime gameTime) 
         {
             Animation.Update(gameTime);
+            if (IsTaken)
+            {
+                GameManager.Instance().currentLevel.Pickups.Remove(this);
+                GameManager.Instance().currentLevel.Collidables.Remove(this);
+            }
         }
         public virtual void Draw(SpriteBatch spriteBatch)
         {

@@ -31,7 +31,11 @@ namespace Platformer.Terrain.Pickups
         }
         public override void Update(GameTime gameTime)
         {
-            // Do Nothing
+            if (IsTaken)
+            {
+                GameManager.Instance().currentLevel.Pickups.Remove(this);
+                GameManager.Instance().currentLevel.Collidables.Remove(this);
+            }
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
