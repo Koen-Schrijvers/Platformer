@@ -22,16 +22,16 @@ namespace Platformer.AnimationUtil.Animation_handlers
             {
                 m.SpriteEffects = SpriteEffects.None;
             }
-            int animationIndex;
+            AnimationType animationType;
             if (m.CurrentSpeedX != 0f)
             {
-                animationIndex = 1;
+                animationType = AnimationType.RUN;
             }
             else
             {
-                animationIndex = 0;
+                animationType = AnimationType.IDLE;
             }
-            CurrentAnimation = animated.Animations[animationIndex];
+            CurrentAnimation = animated.Animations[animationType];
         }
     }
 }

@@ -10,19 +10,22 @@ namespace Platformer.AnimationUtil
 {
     internal class SpriteCutter
     {
-        public static List<Animation> CreateAnimations(Texture2D spriteSheet, int[] sheetLayout, int fps = 20)
+        public static Dictionary<AnimationType,Animation> CreateAnimations(Texture2D spriteSheet, Dictionary<AnimationType, int> sheetLayout ,int fps = 20)
         {
-            List<Animation> animations = new();
-            int frameWidth = spriteSheet.Width/sheetLayout.Max();
-            int frameHeight = spriteSheet.Height/sheetLayout.Length;
-            for (int row = 0; row < sheetLayout.Length; row++)
+            Dictionary<AnimationType,Animation> animations = new();
+            int animationCount = sheetLayout.Keys.Count();
+            int frameWidth = spriteSheet.Width/sheetLayout.Values.Max();
+            int frameHeight = spriteSheet.Height/animationCount;
+            int currentRow = 0;
+            foreach (var animation in sheetLayout)
             {
                 List<Rectangle> frames = new();
-                for (int column = 0; column < sheetLayout[row]; column++)
+                for (int column = 0; column < animation.Value; column++)
                 {
-                    frames.Add(new Rectangle(frameWidth*column, frameHeight*row,frameWidth,frameHeight));
+                    frames.Add(new Rectangle(frameWidth * column, frameHeight * currentRow, frameWidth, frameHeight));
                 }
-                animations.Add(new Animation(frames, fps));
+                animations.Add(animation.Key,new Animation(frames, fps));
+                currentRow++;
             }
             return animations;
         }

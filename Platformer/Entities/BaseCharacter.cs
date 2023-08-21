@@ -21,7 +21,7 @@ namespace Platformer.Entities
         protected IAnimationHandler animationHandler;
         public Vector2 Scale { get; set; }
         public Texture2D Texture { get; protected set; }
-        public List<Animation> Animations { get; protected set; }
+        public Dictionary<AnimationType, Animation> Animations { get; protected set; }
         public SpriteEffects SpriteEffects { get; set; }
 
         //movement

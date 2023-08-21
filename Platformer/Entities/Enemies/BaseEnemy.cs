@@ -27,5 +27,11 @@ namespace Platformer.Entities.Enemies
             if (Health<=0) GameManager.Instance().currentLevel.Collidables.Remove(this);
             if (IsDead) GameManager.Instance().currentLevel.Enemies.Remove(this);
         }
+        public override void TakeDamage(int damage)
+        {
+            Health -= damage;
+            animationHandler.PlayFullAnimation(Animations[AnimationUtil.AnimationType.HURT]);
+            ContentManager.Instance().HurtEnemySoundEffect.Play();
+        }
     }
 }

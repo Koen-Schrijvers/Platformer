@@ -27,16 +27,16 @@ namespace Platformer.AnimationUtil.Animation_handlers
             {
                 p.SpriteEffects = SpriteEffects.None;
             }
-            int animationIndex;
+            AnimationType animationType;
             if (p.IsGrounded)
             {
                 if (p.CurrentSpeedX != 0f)
                 {
-                    animationIndex = 1;
+                    animationType = AnimationType.RUN;
                 }
                 else
                 {
-                    animationIndex = 0;
+                    animationType = AnimationType.IDLE;
                 }
             }
             else
@@ -45,19 +45,19 @@ namespace Platformer.AnimationUtil.Animation_handlers
                 {
                     if (p.HasDoubleJumped)
                     {
-                        animationIndex = 3;
+                        animationType = AnimationType.DOUBLE_JUMP;
                     }
                     else
                     {
-                        animationIndex = 2;
+                        animationType = AnimationType.JUMP;
                     }
                 }
                 else
                 {
-                    animationIndex = 4;
+                    animationType = AnimationType.FALL;
                 }
             }
-            CurrentAnimation = animated.Animations[animationIndex];
+            CurrentAnimation = animated.Animations[animationType];
         }
     }
 }

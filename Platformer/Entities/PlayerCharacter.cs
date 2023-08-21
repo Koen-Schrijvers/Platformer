@@ -62,7 +62,15 @@ namespace Platformer.Entities
         public PlayerCharacter(Vector2 spawn)
         {
             Texture = ContentManager.Instance().FrogTexture;
-            Animations = SpriteCutter.CreateAnimations(Texture, new int[7] { 11, 12, 1, 6, 1, 5, 7 });
+            this.Animations = SpriteCutter.CreateAnimations(Texture, new Dictionary<AnimationType, int>() {
+                {AnimationType.IDLE, 11 },
+                {AnimationType.RUN, 12 },
+                {AnimationType.JUMP, 1 },
+                {AnimationType.DOUBLE_JUMP, 6 },
+                {AnimationType.FALL, 1 },
+                {AnimationType.WALL_JUMP, 5 },
+                {AnimationType.HURT, 7 },
+            });
             Position = spawn;
             CurrentDirection = new Vector2(0, 0);
             BaseSpeed = new Vector2(3, 0);
@@ -114,8 +122,8 @@ namespace Platformer.Entities
             {
                 Health -= damage;
             }
-            SetInvincible(0.5d);
-            animationHandler.PlayFullAnimation(Animations[6]);
+            SetInvincible(10d);
+            animationHandler.PlayFullAnimation(Animations[AnimationType.HURT]);
             animationHandler.Blink(0.5d, 0.05);
             ContentManager.Instance().HurtSoundEffect.Play();
         }

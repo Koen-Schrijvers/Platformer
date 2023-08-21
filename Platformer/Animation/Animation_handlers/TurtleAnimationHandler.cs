@@ -21,7 +21,7 @@ namespace Platformer.AnimationUtil.Animation_handlers
             {
                 t.SpriteEffects = SpriteEffects.None;
             }
-            CurrentAnimation = animated.Animations[0];
+            CurrentAnimation = animated.Animations[AnimationType.RUN];
         }
     }
 }

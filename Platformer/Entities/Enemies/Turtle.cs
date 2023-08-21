@@ -35,7 +35,10 @@ namespace Platformer.Entities.Enemies
         public Turtle(Vector2 spawn, int limitLeft, int limitRight)
         {
             this.Texture = ContentManager.Instance().TurtleTexture;
-            this.Animations = SpriteCutter.CreateAnimations(Texture, new int[2] { 14, 5 });
+            this.Animations = SpriteCutter.CreateAnimations(Texture, new Dictionary<AnimationType, int>() {
+                {AnimationType.RUN, 14 },
+                {AnimationType.HURT, 5 },
+            });
             this.Position = spawn;
             this.hitbox = new FloatRectangle(7, 6, 30, 17);
             this.CurrentDirection = new Vector2(1, 0);
@@ -48,12 +51,6 @@ namespace Platformer.Entities.Enemies
             this.ai = new MushroomAi(this, limitLeft, limitRight);
             this.animationHandler = new TurtleAnimationHandler();
             this.Health = 1;
-        }
-        public override void TakeDamage(int damage)
-        {
-            Health -= damage;
-            animationHandler.PlayFullAnimation(Animations[1]);
-            ContentManager.Instance().HurtEnemySoundEffect.Play();
         }
 
 

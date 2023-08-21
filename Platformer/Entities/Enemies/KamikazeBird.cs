@@ -6,6 +6,7 @@ using Platformer.Utilities.CollisionEvents;
 using Platformer.Utilities;
 using Microsoft.Xna.Framework;
 using Platformer.Managers;
+using System.Collections.Generic;
 
 namespace Platformer.Entities.Enemies
 {
@@ -14,7 +15,7 @@ namespace Platformer.Entities.Enemies
         public KamikazeBird(Vector2 spawn)
         {
             this.Texture = ContentManager.Instance().KamikazeTexture;
-            this.Animations = SpriteCutter.CreateAnimations(Texture, new int[2] { 9, 5 });
+            this.Animations = SpriteCutter.CreateAnimations(Texture, new Dictionary<AnimationType,int>() {  {AnimationType.RUN, 9 }, {AnimationType.HURT, 5 } });
             this.Position = spawn;
             this.hitbox = new FloatRectangle(6, 12, 20, 20);
             this.CurrentDirection = new Vector2(0, 0);
@@ -37,11 +38,6 @@ namespace Platformer.Entities.Enemies
             CheckHealth();
             Animate(gameTime);
         }
-        public override void TakeDamage(int damage)
-        {
-            Health -= damage;
-            animationHandler.PlayFullAnimation(Animations[1]);
-            ContentManager.Instance().HurtEnemySoundEffect.Play();
-        }
+        
     }
 }
